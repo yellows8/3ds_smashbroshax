@@ -1,0 +1,7 @@
+This is haxx for Super Smash Bros for 3DS, via local-WLAN beacon haxx. The haxx triggers while the application is scanning for local multiplayer sessions, when the beacon is being broadcasted.
+In certain cases the application may somewhat hang instead of crashing.
+
+Currently only the demo versions of the application are supported.
+
+ctr-wlanbeacontool from here is required: https://github.com/yellows8/ctr-wlanbeacontool
+
