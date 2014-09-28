@@ -5,3 +5,5 @@ Currently only the demo versions of the application are supported.
 
 ctr-wlanbeacontool from here is required: https://github.com/yellows8/ctr-wlanbeacontool
 
+One way to send the beacon is with aireplay-ng, however that requires a patch, see aireplay-ng.patch. For example, to send the beacon with aireplay-ng: aireplay-ng --interactive -r <beaconpcap> -h <host mac from pcap> <wifi interface>
+

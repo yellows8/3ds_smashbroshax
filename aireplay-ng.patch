@@ -1,0 +1,30 @@
+Index: src/aireplay-ng.c
+===================================================================
+--- src/aireplay-ng.c	(revision 2414)
++++ src/aireplay-ng.c	(working copy)
+@@ -559,7 +559,7 @@
+ 
+     /* check the frame control bytes */
+ 
+-    if( ( h80211[0] & 0x0C ) != ( opt.f_type    << 2 ) &&
++    /*if( ( h80211[0] & 0x0C ) != ( opt.f_type    << 2 ) &&
+         opt.f_type    >= 0 ) return( 1 );
+ 
+     if( ( h80211[0] & 0x70 ) != (( opt.f_subtype << 4 ) & 0x70) && //ignore the leading bit (QoS)
+@@ -572,12 +572,12 @@
+         opt.f_fromds  >= 0 ) return( 1 );
+ 
+     if( ( h80211[1] & 0x40 ) != ( opt.f_iswep   << 6 ) &&
+-        opt.f_iswep   >= 0 ) return( 1 );
++        opt.f_iswep   >= 0 ) return( 1 );*/
+ 
+     /* check the extended IV (TKIP) flag */
+ 
+-    if( opt.f_type == 2 && opt.f_iswep == 1 &&
+-        ( h80211[z + 3] & 0x20 ) != 0 ) return( 1 );
++    /*if( opt.f_type == 2 && opt.f_iswep == 1 &&
++        ( h80211[z + 3] & 0x20 ) != 0 ) return( 1 );*/
+ 
+     /* MAC address checking */
+ 
+
