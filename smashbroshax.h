@@ -24,7 +24,8 @@
 #error "The specified APPBUILD value is not supported."
 #endif
 
-#define POP_LRPC STACKPIVOT_ADR+0x8
+#define POP_LRPC STACKPIVOT_ADR+0x18
+#define MOVSPLR_POPLRPC STACKPIVOT_ADR+0x14 //"mov sp, lr" "pop {lr, pc}"
 
 #endif
 
