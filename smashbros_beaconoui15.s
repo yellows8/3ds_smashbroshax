@@ -54,7 +54,7 @@ additionaldata_start:
 ropstackstart:
 .word POP_R0R4SLIPPC
 .word BEACONDATA_ADR @ r0, outbuf
-.word 0x400 @ r1, size
+.word 0x600 @ r1, size
 .word 0 @ r2, u8 id
 .word 0x0014c110 @ r3, wlancommID
 .word 0 @ r4

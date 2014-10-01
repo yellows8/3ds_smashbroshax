@@ -15,6 +15,8 @@
 
 #define NWMUDS_RecvBeaconBroadcastData 0x00314860 //r0=outbuf, r1=size, r2=u8id, r3=wlancommID
 
+#define LOCALWLAN_SHUTDOWN 0x003158bc //Calls nwmuds_shutdown code and some ndmu code.
+
 #define GSPGPU_SERVHANDLEADR 0x00c119b8
 #define GSPGPU_FLUSHDCACHE 0x0015cea4
 
@@ -37,12 +39,13 @@
 #define POP_LRPC STACKPIVOT_ADR+0x18
 #define MOVSPLR_POPLRPC STACKPIVOT_ADR+0x14 //"mov sp, lr" "pop {lr, pc}"
 
-#define BEACONDATA_ADR ADDITIONALDATA_ADR+0xb8
-#define BEACONTAGDATA_OUITYPE80_ADR (BEACONDATA_ADR + (0xc + 0x1c + 0x1bc)) //Offset 0x0 in the tag-data in the tag for OUI type 0x80(from smashbros_beacon_rop_payload.s).
-
-#define TMPBUF_ADR 0x33e00000
+#define TMPBUF_ADR 0x33F50000
 
 #define TEXT_FCRAMOFFSET 0x04500000
+
+#define BEACONDATA_ADR TMPBUF_ADR+0x1000 //ADDITIONALDATA_ADR+0xb8
+#define BEACONTAGDATA_OUITYPE80_OFFSET (0xc + 0x1c + 0x1bc)
+#define BEACONTAGDATA_OUITYPE80_ADR (BEACONDATA_ADR + BEACONTAGDATA_OUITYPE80_OFFSET) //Offset 0x0 in the tag-data in the tag for OUI type 0x80(from smashbros_beacon_rop_payload.s).
 
 #endif
 
