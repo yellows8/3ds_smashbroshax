@@ -13,6 +13,8 @@
 
 #define SVCSLEEPTHREAD 0x001acba4
 
+#define SRV_GETSERVICEHANDLE 0x001451f8 //r0=handle*, r1=servname, r2=servlen, r3=0
+
 #define NWMUDS_RecvBeaconBroadcastData 0x00314860 //r0=outbuf, r1=size, r2=u8id, r3=wlancommID
 
 #define LOCALWLAN_SHUTDOWN 0x003158bc //Calls nwmuds_shutdown code and some ndmu code.
@@ -43,7 +45,7 @@
 
 #define TEXT_FCRAMOFFSET 0x04500000
 
-#define BEACONDATA_ADR TMPBUF_ADR+0x1000 //ADDITIONALDATA_ADR+0xb8
+#define BEACONDATA_ADR TMPBUF_ADR+0x4000 //ADDITIONALDATA_ADR+0xb8
 #define BEACONTAGDATA_OUITYPE80_OFFSET (0xc + 0x1c + 0x1bc)
 #define BEACONTAGDATA_OUITYPE80_ADR (BEACONDATA_ADR + BEACONTAGDATA_OUITYPE80_OFFSET) //Offset 0x0 in the tag-data in the tag for OUI type 0x80(from smashbros_beacon_rop_payload.s).
 

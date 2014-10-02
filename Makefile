@@ -8,6 +8,10 @@ ifeq ($(strip $(INPCAP)),)
 $(error "The INPCAP param is required.")
 endif
 
+ifeq ($(strip $(PAYLOADURL)),)
+$(error "The PAYLOADURL param is required.")
+endif
+
 all:	smashbrosusa_demo_beaconhax.pcap smashbroseur_demo_beaconhax.pcap
 
 clean:
@@ -38,8 +42,8 @@ smashbroseur_demo_beaconoui15.elf:	smashbros_beaconoui15.s
 	$(CC) -x assembler-with-cpp -nostartfiles -nostdlib -DREGION=2 -DAPPBUILD=0 $< -o $@
 
 smashbrosusa_demo_beacon_rop_payload.elf:	smashbros_beacon_rop_payload.s
-	$(CC) -x assembler-with-cpp -nostartfiles -nostdlib -DREGION=1 -DAPPBUILD=0 $< -o $@
+	$(CC) -x assembler-with-cpp -nostartfiles -nostdlib -DREGION=1 -DAPPBUILD=0 -DPAYLOADURL=\"$(PAYLOADURL)\" $< -o $@
 
 smashbroseur_demo_beacon_rop_payload.elf:	smashbros_beacon_rop_payload.s
-	$(CC) -x assembler-with-cpp -nostartfiles -nostdlib -DREGION=2 -DAPPBUILD=0 $< -o $@
+	$(CC) -x assembler-with-cpp -nostartfiles -nostdlib -DREGION=2 -DAPPBUILD=0 -DPAYLOADURL=\"$(PAYLOADURL)\" $< -o $@
 

