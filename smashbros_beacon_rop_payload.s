@@ -82,6 +82,8 @@ bx r1
 ldr r0, =LOCALWLAN_SHUTDOWN
 blx r0
 
+bl ACU_WaitInternetConnection
+
 blx crasharm
 
 .pool
@@ -96,10 +98,175 @@ tag1:
 
 tag1_code:
 
+srv_init: @ r0 = srv handle*
+push {r1, r2, r4, r5, lr}
+mov r4, r0
+
+mov r1, #0
+ldr r0, =0x3a767273
+str r0, [sp, #0]
+str r1, [sp, #4]
+
+mov r1, sp
+mov r0, r4
+blx svcConnectToPort
+cmp r0, #0
+bne srv_init_end
+
+blx get_cmdbufptr
+mov r5, r0
+
+ldr r1, =0x00010002
+str r1, [r5, #0]
+mov r1, #0x20
+str r1, [r5, #4]
+
+ldr r0, [r4]
+blx svcSendSyncRequest
+cmp r0, #0
+bne srv_init_end
+ldr r0, [r5, #4]
+
+srv_init_end:
+pop {r1, r2, r4, r5, pc}
+.pool
+
+srv_GetServiceHandle: @ r0 = srv handle*, r1 = out handle*, r2 = servicename, r3=servlen
+push {r3, r4, r5, r6, r7, lr}
+mov r5, r0
+mov r6, r1
+mov r7, r2
+
+blx get_cmdbufptr
+mov r4, r0
+
+ldr r1, =0x00050100
+str r1, [r4, #0]
+add r1, r4, #4
+
+ldr r2, [r7, #0]
+ldr r3, [r7, #4]
+str r2, [r1, #0]
+str r3, [r1, #4]
+
+ldr r2, [sp, #0]
+str r2, [r4, #12]
+mov r2, #0
+str r2, [r4, #16]
+
+ldr r0, [r5]
+blx svcSendSyncRequest
+cmp r0, #0
+bne srv_GetServiceHandle_end
+
+ldr r0, [r4, #4]
+cmp r0, #0
+bne srv_GetServiceHandle_end
+
+ldr r1, [r4, #12]
+str r1, [r6]
+
+srv_GetServiceHandle_end:
+pop {r3, r4, r5, r6, r7, pc}
+.pool
+
+ACU_GetWifiStatus:
+push {r0, r1, r4, lr}
+blx get_cmdbufptr
+mov r4, r0
+
+mov r1, #0xd
+lsl r1, r1, #16
+str r1, [r4, #0]
+
+ldr r0, [sp, #0]
+ldr r0, [r0]
+blx svcSendSyncRequest
+cmp r0, #0
+bne ACU_GetWifiStatus_end
+ldr r0, [r4, #4]
+ldr r2, [sp, #4]
+ldr r1, [r4, #8]
+str r1, [r2]
+
+ACU_GetWifiStatus_end:
+pop {r1, r2, r4, pc}
+.pool
+
+ACU_WaitInternetConnection:
+push {lr}
+sub sp, sp, #12
+add r0, sp, #0
+bl srv_init
+
+add r0, sp, #0
+add r1, sp, #4
+add r2, sp, #8
+ldr r3, =0x753a6361
+str r3, [r2]
+mov r3, #4
+bl srv_GetServiceHandle
+
+ACU_WaitInternetConnection_lp:
+add r0, sp, #4
+add r1, sp, #8
+bl ACU_GetWifiStatus
+cmp r0, #0
+bne ACU_WaitInternetConnection_lp
+ldr r0, [sp, #8]
+cmp r0, #1
+bne ACU_WaitInternetConnection_lp
+
+ldr r0, [sp, #4]
+blx svcCloseHandle
+
+ldr r0, [sp, #0]
+blx svcCloseHandle
+
+add sp, sp, #12
+pop {pc}
+.pool
+
+.thumb
+
+.fill ((tag1 + 0xfc) - .), 1, 0xffffffff
+.byte 0xff, 0xff @ Pad the tag-data to 0xfe-bytes.
+.byte 0xff, 0xff @ Padding, tagid/tagsize bytes would be located here in memory.
+
+tag2:
+.byte 0x00, 0x1f, 0x32 @ OUI
+.byte 0x81 @ OUI type
+
+tag2_code:
 .arm
+
+.type svcConnectToPort, %function
+svcConnectToPort:
+	str r0, [sp,#-0x4]!
+	svc 0x2D
+	ldr r3, [sp], #4
+	str r1, [r3]
+	bx lr
+
+.type svcCloseHandle, %function
+svcCloseHandle:
+svc 0x23
+bx lr
+
+.type svcSendSyncRequest, %function
+svcSendSyncRequest:
+svc 0x32
+bx lr
+
+.type get_cmdbufptr, %function
+get_cmdbufptr:
+mrc 15, 0, r0, cr13, cr0, 3
+add r0, r0, #0x80
+bx lr
+
 crasharm:
 .word 0xffffffff
 
-.fill ((tag1 + 0xfc) - .), 1, 0xffffffff
+.fill ((tag2 + 0xfc) - .), 1, 0xffffffff
 .byte 0xff, 0xff
 
