@@ -15,7 +15,7 @@ endif
 all:	smashbrosusa_demo_beaconhax.pcap smashbroseur_demo_beaconhax.pcap
 
 clean:
-	rm -f smashbrosusa_demo_beaconhax.pcap smashbroseur_demo_beaconhax.pcap smashbrosusa_demo_beaconoui15.bin smashbroseur_demo_beaconoui15.bin smashbrosusa_demo_beaconoui15.elf smashbroseur_demo_beaconoui15.elf
+	rm -f smashbrosusa_demo_beaconhax.pcap smashbroseur_demo_beaconhax.pcap smashbrosusa_demo_beaconoui15.bin smashbroseur_demo_beaconoui15.bin smashbrosusa_demo_beaconoui15.elf smashbroseur_demo_beaconoui15.elf smashbrosusa_demo_beacon_rop_payload.bin smashbroseur_demo_beacon_rop_payload.bin smashbrosusa_demo_beacon_rop_payload.elf smashbroseur_demo_beacon_rop_payload.elf
 
 smashbrosusa_demo_beaconhax.pcap: smashbrosusa_demo_beaconoui15.bin smashbrosusa_demo_beacon_rop_payload.bin
 	ctr-wlanbeacontool --inpcap=$(INPCAP) --outpcap=$@ --inoui15=smashbrosusa_demo_beaconoui15.bin --addtagex=0xfe,0x2,smashbrosusa_demo_beacon_rop_payload.bin
