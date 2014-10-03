@@ -428,7 +428,7 @@ str r3, [sp, #8] @ height1
 mov r3, #8
 str r3, [sp, #12] @ flags
 mov r0, r6
-ldr r1, =(0x30000000+TEXT_FCRAMOFFSET+0x9000) @ dstaddr
+ldr r1, =(0x30000000+TEXT_FCRAMOFFSET+0x100000) @ dstaddr
 ldr r2, =0x4000 @ size
 mov r3, #0 @ width0
 
@@ -460,7 +460,7 @@ ldr r1, =GSPGPU_SERVHANDLEADR
 str r1, [r6, #0x58]
 
 mov r0, r6
-ldr r1, =0x00109000
+ldr r1, =0x00200000
 blx r1
 
 download_payload_end:
