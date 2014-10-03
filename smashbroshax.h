@@ -24,7 +24,7 @@
 
 #define GXLOW_CMD4 0x00171cc8
 
-#elif APPBUILD==10//Full-game v1.0.
+#elif APPBUILD==100//Full-game v1.0.0.
 
 #if REGION==3//JPN
 #define STACKPIVOT_ADR 0x0012e264
@@ -33,6 +33,28 @@
 #else
 #error "The specified region for this APPBUILD value is not supported."
 #endif
+
+#elif APPBUILD==102//Full-game v1.0.2.
+
+#define ADDITIONALDATA_ADR 0x00be57e8
+#define STACKPIVOT_ADR 0x0012dfd0
+#define POP_PC 0x0010dbf4
+#define POP_R0R4SLIPPC 0x001d63b4
+
+#define MEMCPY 0x00174e34
+
+#define SVCSLEEPTHREAD 0x001b4d8c
+
+#define SRV_GETSERVICEHANDLE 0x001495e8
+
+#define NWMUDS_RecvBeaconBroadcastData 0x0035cf84
+
+#define LOCALWLAN_SHUTDOWN 0x0035dfe0
+
+#define GSPGPU_SERVHANDLEADR 0x00163184
+#define GSPGPU_FLUSHDCACHE 0x00162d58
+
+#define GXLOW_CMD4 0x00178af4
 
 #else
 #error "The specified APPBUILD value is not supported."

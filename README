@@ -1,7 +1,7 @@
 This is haxx for Super Smash Bros for 3DS, via local-WLAN beacon haxx. The haxx triggers while the application is scanning for local multiplayer sessions, when the beacon is being broadcasted.
 In certain cases the application may somewhat hang instead of crashing.
 
-Currently only the demo versions of the application are supported. All regions of the demo builds can "see" beacons from all smash demo regions: besides haxx these beacons are not region-specific. Therefore the only region-specific part, if any, is region-specific ROP addrs used in the beacon. Currently no region-specific ROP addrs are used.
+Currently only the demo versions and the updated version(v1.0.2) of the application are supported. All regions of the demo builds can "see" beacons from all smash demo regions: besides haxx these beacons are not region-specific. Therefore the only region-specific part, if any, is region-specific ROP addrs used in the beacon. Currently no region-specific ROP addrs are used. The .code for v1.0.2 for USA/EUR is basically the same(except for exefs .code hashes), therefore the exact same haxx can be used for both(it's unknown whether this applies to the JPN update too). While v1.0.2 is supported, the wlancommID used for that is the one from the demo, therefore the built pcap isn't actually usable currently.
 
 ctr-wlanbeacontool from here is required: https://github.com/yellows8/ctr-wlanbeacontool
 
