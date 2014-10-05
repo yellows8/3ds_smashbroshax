@@ -45,13 +45,13 @@ smashbros_gamev102_beacon_rop_payload.bin: smashbros_gamev102_beacon_rop_payload
 	$(OBJCOPY) -O binary $< $@
 
 smashbrosusa_demo_beaconoui15.elf:	smashbros_beaconoui15.s
-	$(CC) -x assembler-with-cpp -nostartfiles -nostdlib -DREGION=1 -DAPPBUILD=0 $< -o $@
+	$(CC) -x assembler-with-cpp -nostartfiles -nostdlib -DREGION=1 -DAPPBUILD=0 -DWLANCOMMID=0x10c11400 $< -o $@
 
 smashbroseur_demo_beaconoui15.elf:	smashbros_beaconoui15.s
-	$(CC) -x assembler-with-cpp -nostartfiles -nostdlib -DREGION=2 -DAPPBUILD=0 $< -o $@
+	$(CC) -x assembler-with-cpp -nostartfiles -nostdlib -DREGION=2 -DAPPBUILD=0 -DWLANCOMMID=0x10c11400 $< -o $@
 
 smashbros_gamev102_beaconoui15.elf:	smashbros_beaconoui15.s
-	$(CC) -x assembler-with-cpp -nostartfiles -nostdlib -DAPPBUILD=102 $< -o $@
+	$(CC) -x assembler-with-cpp -nostartfiles -nostdlib -DAPPBUILD=102 -DWLANCOMMID=0x108b0b00 $< -o $@
 
 smashbrosusa_demo_beacon_rop_payload.elf:	smashbros_beacon_rop_payload.s
 	$(CC) -x assembler-with-cpp -nostartfiles -nostdlib -DREGION=1 -DAPPBUILD=0 -DPAYLOADURL=\"$(PAYLOADURL)\" $< -o $@
