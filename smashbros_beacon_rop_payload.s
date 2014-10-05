@@ -81,6 +81,9 @@ bx r1
 
 bl init_sp
 
+ldr r0, =0x30000000
+bl overwrite_framebufs
+
 ldr r0, =LOCALWLAN_SHUTDOWN
 blx r0
 
@@ -465,6 +468,23 @@ blx r1
 
 download_payload_end:
 b download_payload_end
+.pool
+
+overwrite_framebufs:
+push {r4, r5, lr}
+sub sp, sp, #32
+
+mov r3, #8
+str r3, [sp, #12] @ flags
+ldr r1, =0x1f000000 @ dstaddr
+ldr r2, =0x100000
+mov r3, #0 @ width0
+
+ldr r5, =GXLOW_CMD4
+blx r5
+
+add sp, sp, #32
+pop {r4, r5, pc}
 .pool
 
 init_sp:
