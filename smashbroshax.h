@@ -30,6 +30,8 @@
 
 #define GXLOW_CMD4 0x00171cc8
 
+#define TEXT_APPMEM_OFFSET 0x00b00000 //Offset for physical-mem .text, relative to application mem-region end.
+
 #elif APPBUILD==100//Full-game v1.0.0.
 
 #if REGION==3//JPN
@@ -39,6 +41,8 @@
 #else
 #error "The specified region for this APPBUILD value is not supported."
 #endif
+
+#define TEXT_APPMEM_OFFSET 0x00a00000
 
 #elif APPBUILD==102//Full-game v1.0.2.
 
@@ -68,6 +72,8 @@
 
 #define GXLOW_CMD4 0x00178af4
 
+#define TEXT_APPMEM_OFFSET 0x00a00000
+
 #else
 #error "The specified APPBUILD value is not supported."
 #endif
@@ -78,9 +84,6 @@
 #define TMPBUF_ADR 0x33F50000
 
 #define GXLOWCMD4_DSTADR_PTR TMPBUF_ADR+0x6000 //The value stored here is the dst-addr for gxlowcmd4.
-//#define TEXT_FCRAMOFFSET 0x04500000
-#define TEXT_APPMEM_OFFSET 0x00b00000 //Offset for physical-mem .text, relative to application mem-region end.
-
 #define BEACONDATA_ADR TMPBUF_ADR+0x4000 //ADDITIONALDATA_ADR+0xb8
 #define BEACONTAGDATA_OUITYPE80_OFFSET (0xc + 0x1c + 0x1bc)
 #define BEACONTAGDATA_OUITYPE80_ADR (BEACONDATA_ADR + BEACONTAGDATA_OUITYPE80_OFFSET) //Offset 0x0 in the tag-data in the tag for OUI type 0x80(from smashbros_beacon_rop_payload.s).
