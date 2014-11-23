@@ -32,6 +32,8 @@
 
 #define TEXT_APPMEM_OFFSET 0x00b00000 //Offset for physical-mem .text, relative to application mem-region end.
 
+#define ADDITONALDATA_SIZE1 0x18A0
+
 #elif APPBUILD==100//Full-game v1.0.0.
 
 #if REGION==3//JPN
@@ -39,10 +41,37 @@
 
 #error "This appbuild+region isn't fully supported."
 #else
-#error "The specified region for this APPBUILD value is not supported."
+#define ADDITIONALDATA_ADR 0x00be37e8
+#define STACKPIVOT_ADR 0x0012e268
+#define POP_PC 0x0010dcc0
+#define POP_R0R4SLIPPC 0x001d75b4
+#define POP_R0PC 0x001c84e4
+
+#define ROP_LDRR1R1_STRR1R0 0x00354094
+#define ROP_MOVR1R3_BXIP 0x0057c6f4
+#define ROP_LDRR2R0_SUBR1R2R1_STRR1R0 0x005df8b8
+#define ROP_LDRR1R5_MOVR0R8_BLXR7 0x00a761e8
+
+#define MEMCPY 0x00175d98
+
+#define SVCSLEEPTHREAD 0x001b6008
+
+#define SRV_GETSERVICEHANDLE 0x0014a000
+
+#define NWMUDS_RecvBeaconBroadcastData 0x0035df7c
+
+#define LOCALWLAN_SHUTDOWN 0x0035efd8
+
+#define GSPGPU_SERVHANDLEADR 0x00b5b428
+#define GSPGPU_FLUSHDCACHE 0x00163f44
+
+#define GXLOW_CMD4 0x00179a5c
+
 #endif
 
 #define TEXT_APPMEM_OFFSET 0x00a00000
+
+#define ADDITONALDATA_SIZE1 0x2092
 
 #elif APPBUILD==102//Full-game v1.0.2.
 
@@ -67,12 +96,14 @@
 
 #define LOCALWLAN_SHUTDOWN 0x0035dfe0
 
-#define GSPGPU_SERVHANDLEADR 0x00163184
+#define GSPGPU_SERVHANDLEADR 0x00b5d440
 #define GSPGPU_FLUSHDCACHE 0x00162d58
 
 #define GXLOW_CMD4 0x00178af4
 
 #define TEXT_APPMEM_OFFSET 0x00a00000
+
+#define ADDITONALDATA_SIZE1 0x2092
 
 #else
 #error "The specified APPBUILD value is not supported."
@@ -81,7 +112,11 @@
 #define POP_LRPC STACKPIVOT_ADR+0x18
 #define MOVSPLR_POPLRPC STACKPIVOT_ADR+0x14 //"mov sp, lr" "pop {lr, pc}"
 
+#if APPBUILD==0//demo
 #define TMPBUF_ADR 0x33F50000
+#else//full-game
+#define TMPBUF_ADR 0x33E18000//Full-game linearmem heap is smaller than the demo.
+#endif
 
 #define GXLOWCMD4_DSTADR_PTR TMPBUF_ADR+0x6000 //The value stored here is the dst-addr for gxlowcmd4.
 #define BEACONDATA_ADR TMPBUF_ADR+0x4000 //ADDITIONALDATA_ADR+0xb8
