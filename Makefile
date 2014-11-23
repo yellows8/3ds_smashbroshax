@@ -1,7 +1,12 @@
+#---------------------------------------------------------------------------------
+.SUFFIXES:
+#---------------------------------------------------------------------------------
+
 ifeq ($(strip $(DEVKITARM)),)
 $(error "Please set DEVKITARM in your environment. export DEVKITARM=<path to>devkitARM")
 endif
 
+TOPDIR ?= $(CURDIR)
 include $(DEVKITARM)/base_rules
 
 ifeq ($(strip $(INPCAP)),)
@@ -12,10 +17,20 @@ ifeq ($(strip $(PAYLOADURL)),)
 $(error "The PAYLOADURL param is required.")
 endif
 
+.PHONY: clean all
+
 all:	smashbrosusa_demo_beaconhax.pcap smashbroseur_demo_beaconhax.pcap smashbros_gamewestv100_beaconhax.pcap smashbros_gamev102_beaconhax.pcap smashbrosfullgame_beaconseq0.pcap smashbrosfullgame_beaconseq1.pcap smashbrosfullgame_beaconseq2.pcap smashbrosfullgame_beaconseq3.pcap smashbrosfullgame_beaconseq5.pcap
 
 clean:
-	rm -f smashbrosusa_demo_beaconhax.pcap smashbroseur_demo_beaconhax.pcap smashbros_gamewestv100_beaconhax.pcap smashbros_gamev102_beaconhax.pcap smashbrosfullgame_beaconseq0.pcap smashbrosfullgame_beaconseq1.pcap smashbrosfullgame_beaconseq2.pcap smashbrosfullgame_beaconseq3.pcap smashbrosfullgame_beaconseq5.pcap smashbrosusa_demo_beaconoui15.bin smashbroseur_demo_beaconoui15.bin smashbrosusa_demo_beaconoui15.bin smashbros_gamev102_beaconoui15.bin smashbrosfullgame_beaconseq0.bin smashbrosfullgame_beaconseq1.bin smashbrosfullgame_beaconseq2.bin smashbrosfullgame_beaconseq3.bin smashbrosfullgame_beaconseq5.bin smashbrosusa_demo_beaconoui15.elf smashbroseur_demo_beaconoui15.elf smashbros_gamewestv100_beaconoui15.elf smashbros_gamev102_beaconoui15.elf smashbrosusa_demo_beacon_rop_payload.bin smashbroseur_demo_beacon_rop_payload.bin smashbros_gamewestv100_beacon_rop_payload.bin smashbros_gamev102_beacon_rop_payload.bin smashbrosusa_demo_beacon_rop_payload.elf smashbroseur_demo_beacon_rop_payload.elf smashbros_gamewestv100_beacon_rop_payload.elf smashbros_gamev102_beacon_rop_payload.elf smashbrosfullgame_beaconseq0.elf smashbrosfullgame_beaconseq1.elf smashbrosfullgame_beaconseq2.elf smashbrosfullgame_beaconseq3.elf smashbrosfullgame_beaconseq5.elf
+	rm -f smashbrosusa_demo_beaconhax.pcap smashbroseur_demo_beaconhax.pcap smashbros_gamewestv100_beaconhax.pcap smashbros_gamev102_beaconhax.pcap
+	rm -f smashbrosusa_demo_beaconoui15.bin smashbroseur_demo_beaconoui15.bin smashbrosusa_demo_beaconoui15.bin smashbros_gamev102_beaconoui15.bin
+	rm -f smashbrosusa_demo_beaconoui15.elf smashbroseur_demo_beaconoui15.elf smashbros_gamewestv100_beaconoui15.elf smashbros_gamev102_beaconoui15.elf
+	rm -f smashbrosusa_demo_beacon_rop_payload.bin smashbroseur_demo_beacon_rop_payload.bin smashbros_gamewestv100_beacon_rop_payload.bin smashbros_gamev102_beacon_rop_payload.bin
+	rm -f smashbrosusa_demo_beacon_rop_payload.elf smashbroseur_demo_beacon_rop_payload.elf smashbros_gamewestv100_beacon_rop_payload.elf smashbros_gamev102_beacon_rop_payload.elf
+	
+	rm -f smashbrosfullgame_beaconseq0.pcap smashbrosfullgame_beaconseq1.pcap smashbrosfullgame_beaconseq2.pcap smashbrosfullgame_beaconseq3.pcap smashbrosfullgame_beaconseq5.pcap
+	rm -f smashbrosfullgame_beaconseq0.bin smashbrosfullgame_beaconseq1.bin smashbrosfullgame_beaconseq2.bin smashbrosfullgame_beaconseq3.bin smashbrosfullgame_beaconseq5.bin
+	rm -f smashbrosfullgame_beaconseq0.elf smashbrosfullgame_beaconseq1.elf smashbrosfullgame_beaconseq2.elf smashbrosfullgame_beaconseq3.elf smashbrosfullgame_beaconseq5.elf
 
 smashbrosusa_demo_beaconhax.pcap: smashbrosusa_demo_beaconoui15.bin smashbrosusa_demo_beacon_rop_payload.bin
 	ctr-wlanbeacontool --inpcap=$(INPCAP) --outpcap=$@ --inoui15=smashbrosusa_demo_beaconoui15.bin --addtagex=0xfe,0x2,smashbrosusa_demo_beacon_rop_payload.bin
