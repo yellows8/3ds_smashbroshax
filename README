@@ -1,11 +1,11 @@
 This is haxx for Super Smash Bros for 3DS, via local-WLAN beacon haxx. The haxx triggers while the application is scanning for local multiplayer sessions, when the beacon is being broadcasted.
-In certain cases the application may somewhat hang instead of crashing.
+In certain cases the application may somewhat hang instead of crashing. Note that in certain cases the haxx may take longer to trigger with the full-game than the demo.
 
 Currently only the demo versions and the updated version(v1.0.2) of the application are supported. The only region-specific part(for demo builds), if any, is region-specific ROP addrs used in the beacon. Currently no region-specific ROP addrs are used, therefore the final pcap for the demo versions are exactly the same. The .code for v1.0.2 for USA/EUR is about the same, therefore the exact same haxx can be used for both(this probably works for JPN too, however it's unknown whether that's actually the case). The full-game isn't actually fully supported.
 
 ctr-wlanbeacontool from here is required: https://github.com/yellows8/ctr-wlanbeacontool
 
-One way to send the beacon is with aireplay-ng, however that requires a patch, see aireplay-ng.patch. For example, to send the beacon with aireplay-ng: aireplay-ng --interactive -r {beaconpcap_path} -h {host mac from pcap} {wifi interface}
+One way to send the beacon is with aireplay-ng, however that requires a patch, see aireplay-ng.patch. For example, to send the beacon with aireplay-ng: aireplay-ng --interactive -r {beaconpcap_path} -h {host mac from pcap} -x 1 {wifi interface}
 
-For the full-game, the following must be broadcasted at the same time as the haxx beacon too: smashbrosfullgame_beaconseqX.pcap, where X is 0, 1, 2, 3, and 5.
+Note that the smashbrosfullgame_beaconseqX.pcap beacons aren't actually needed.
 
