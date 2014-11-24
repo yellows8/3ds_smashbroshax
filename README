@@ -2,9 +2,12 @@ This is haxx for Super Smash Bros for 3DS, via local-WLAN beacon haxx. The haxx 
 In certain cases the application may somewhat hang instead of crashing. Note that in certain cases the haxx may take longer to trigger with the full-game than the demo.
 
 Supported application builds:
-* demo, tested with USA/EUR(unknown if JPN works with this). Note that while the .code for USA/EUR is different, the two built haxx beacons are identical due to same addrs.
-* v1.0.0, tested with USA.
-* v1.0.2, not tested.
+* demo: USA+EUR supported and tested.
+* v1.0.0. West: supported, only tested with USA.
+* v1.0.2. West: not tested.
+* v1.0.4. West: supported+tested.
+
+West = USA/EUR, the full-game .code is basically the same for both it seems. The JPN .code is slightly different.
 
 ctr-wlanbeacontool from here is required: https://github.com/yellows8/ctr-wlanbeacontool
 
