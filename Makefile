@@ -19,14 +19,14 @@ endif
 
 .PHONY: clean all
 
-all:	smashbrosusa_demo_beaconhax.pcap smashbroseur_demo_beaconhax.pcap smashbros_gamewestv100_beaconhax.pcap smashbros_gamewestv102_beaconhax.pcap smashbros_gamewestv104_beaconhax.pcap smashbrosfullgame_beaconseq0.pcap smashbrosfullgame_beaconseq1.pcap smashbrosfullgame_beaconseq2.pcap smashbrosfullgame_beaconseq3.pcap smashbrosfullgame_beaconseq5.pcap
+all:	smashbrosusa_demo_beaconhax.pcap smashbroseur_demo_beaconhax.pcap smashbros_gameusav100_beaconhax.pcap smashbros_gameusav102_beaconhax.pcap smashbros_gameusav104_beaconhax.pcap smashbrosfullgame_beaconseq0.pcap smashbrosfullgame_beaconseq1.pcap smashbrosfullgame_beaconseq2.pcap smashbrosfullgame_beaconseq3.pcap smashbrosfullgame_beaconseq5.pcap
 
 clean:
-	rm -f smashbrosusa_demo_beaconhax.pcap smashbroseur_demo_beaconhax.pcap smashbros_gamewestv100_beaconhax.pcap smashbros_gamewestv102_beaconhax.pcap smashbros_gamewestv104_beaconhax.pcap
-	rm -f smashbrosusa_demo_beaconoui15.bin smashbroseur_demo_beaconoui15.bin smashbrosusa_demo_beaconoui15.bin smashbros_gamewestv102_beaconoui15.bin smashbros_gamewestv104_beaconoui15.bin
-	rm -f smashbrosusa_demo_beaconoui15.elf smashbroseur_demo_beaconoui15.elf smashbros_gamewestv100_beaconoui15.elf smashbros_gamewestv102_beaconoui15.elf smashbros_gamewestv104_beaconoui15.elf
-	rm -f smashbrosusa_demo_beacon_rop_payload.bin smashbroseur_demo_beacon_rop_payload.bin smashbros_gamewestv100_beacon_rop_payload.bin smashbros_gamewestv102_beacon_rop_payload.bin smashbros_gamewestv104_beacon_rop_payload.bin
-	rm -f smashbrosusa_demo_beacon_rop_payload.elf smashbroseur_demo_beacon_rop_payload.elf smashbros_gamewestv100_beacon_rop_payload.elf smashbros_gamewestv102_beacon_rop_payload.elf smashbros_gamewestv104_beacon_rop_payload.elf
+	rm -f smashbrosusa_demo_beaconhax.pcap smashbroseur_demo_beaconhax.pcap smashbros_gameusav100_beaconhax.pcap smashbros_gameusav102_beaconhax.pcap smashbros_gameusav104_beaconhax.pcap
+	rm -f smashbrosusa_demo_beaconoui15.bin smashbroseur_demo_beaconoui15.bin smashbrosusa_demo_beaconoui15.bin smashbros_gameusav102_beaconoui15.bin smashbros_gameusav104_beaconoui15.bin
+	rm -f smashbrosusa_demo_beaconoui15.elf smashbroseur_demo_beaconoui15.elf smashbros_gameusav100_beaconoui15.elf smashbros_gameusav102_beaconoui15.elf smashbros_gameusav104_beaconoui15.elf
+	rm -f smashbrosusa_demo_beacon_rop_payload.bin smashbroseur_demo_beacon_rop_payload.bin smashbros_gameusav100_beacon_rop_payload.bin smashbros_gameusav102_beacon_rop_payload.bin smashbros_gameusav104_beacon_rop_payload.bin
+	rm -f smashbrosusa_demo_beacon_rop_payload.elf smashbroseur_demo_beacon_rop_payload.elf smashbros_gameusav100_beacon_rop_payload.elf smashbros_gameusav102_beacon_rop_payload.elf smashbros_gameusav104_beacon_rop_payload.elf
 	
 	rm -f smashbrosfullgame_beaconseq0.pcap smashbrosfullgame_beaconseq1.pcap smashbrosfullgame_beaconseq2.pcap smashbrosfullgame_beaconseq3.pcap smashbrosfullgame_beaconseq5.pcap
 	rm -f smashbrosfullgame_beaconseq0.bin smashbrosfullgame_beaconseq1.bin smashbrosfullgame_beaconseq2.bin smashbrosfullgame_beaconseq3.bin smashbrosfullgame_beaconseq5.bin
@@ -38,29 +38,29 @@ smashbrosusa_demo_beaconhax.pcap: smashbrosusa_demo_beaconoui15.bin smashbrosusa
 smashbroseur_demo_beaconhax.pcap: smashbroseur_demo_beaconoui15.bin smashbroseur_demo_beacon_rop_payload.bin
 	ctr-wlanbeacontool --inpcap=$(INPCAP) --outpcap=$@ --inoui15=smashbroseur_demo_beaconoui15.bin --addtagex=0xfe,0x2,smashbroseur_demo_beacon_rop_payload.bin
 
-smashbros_gamewestv100_beaconhax.pcap: smashbros_gamewestv100_beaconoui15.bin smashbros_gamewestv100_beacon_rop_payload.bin
-	ctr-wlanbeacontool --inpcap=$(INPCAP) --outpcap=$@ --inoui15=smashbros_gamewestv100_beaconoui15.bin --addtagex=0xfe,0x2,smashbros_gamewestv100_beacon_rop_payload.bin
+smashbros_gameusav100_beaconhax.pcap: smashbros_gameusav100_beaconoui15.bin smashbros_gameusav100_beacon_rop_payload.bin
+	ctr-wlanbeacontool --inpcap=$(INPCAP) --outpcap=$@ --inoui15=smashbros_gameusav100_beaconoui15.bin --addtagex=0xfe,0x2,smashbros_gameusav100_beacon_rop_payload.bin
 
-smashbros_gamewestv102_beaconhax.pcap: smashbros_gamewestv102_beaconoui15.bin smashbros_gamewestv102_beacon_rop_payload.bin
-	ctr-wlanbeacontool --inpcap=$(INPCAP) --outpcap=$@ --inoui15=smashbros_gamewestv102_beaconoui15.bin --addtagex=0xfe,0x2,smashbros_gamewestv102_beacon_rop_payload.bin
+smashbros_gameusav102_beaconhax.pcap: smashbros_gameusav102_beaconoui15.bin smashbros_gameusav102_beacon_rop_payload.bin
+	ctr-wlanbeacontool --inpcap=$(INPCAP) --outpcap=$@ --inoui15=smashbros_gameusav102_beaconoui15.bin --addtagex=0xfe,0x2,smashbros_gameusav102_beacon_rop_payload.bin
 
-smashbros_gamewestv104_beaconhax.pcap: smashbros_gamewestv104_beaconoui15.bin smashbros_gamewestv104_beacon_rop_payload.bin
-	ctr-wlanbeacontool --inpcap=$(INPCAP) --outpcap=$@ --inoui15=smashbros_gamewestv104_beaconoui15.bin --addtagex=0xfe,0x2,smashbros_gamewestv104_beacon_rop_payload.bin
+smashbros_gameusav104_beaconhax.pcap: smashbros_gameusav104_beaconoui15.bin smashbros_gameusav104_beacon_rop_payload.bin
+	ctr-wlanbeacontool --inpcap=$(INPCAP) --outpcap=$@ --inoui15=smashbros_gameusav104_beaconoui15.bin --addtagex=0xfe,0x2,smashbros_gameusav104_beacon_rop_payload.bin
 
-smashbrosfullgame_beaconseq0.pcap: smashbros_gamewestv102_beaconoui15.bin smashbrosfullgame_beaconseq0.bin
-	ctr-wlanbeacontool --inpcap=$(INPCAP) --outpcap=$@ --inoui15=smashbros_gamewestv102_beaconoui15.bin --inadditionaldata=smashbrosfullgame_beaconseq0.bin
+smashbrosfullgame_beaconseq0.pcap: smashbros_gameusav102_beaconoui15.bin smashbrosfullgame_beaconseq0.bin
+	ctr-wlanbeacontool --inpcap=$(INPCAP) --outpcap=$@ --inoui15=smashbros_gameusav102_beaconoui15.bin --inadditionaldata=smashbrosfullgame_beaconseq0.bin
 
-smashbrosfullgame_beaconseq1.pcap: smashbros_gamewestv102_beaconoui15.bin smashbrosfullgame_beaconseq1.bin
-	ctr-wlanbeacontool --inpcap=$(INPCAP) --outpcap=$@ --inoui15=smashbros_gamewestv102_beaconoui15.bin --inadditionaldata=smashbrosfullgame_beaconseq1.bin
+smashbrosfullgame_beaconseq1.pcap: smashbros_gameusav102_beaconoui15.bin smashbrosfullgame_beaconseq1.bin
+	ctr-wlanbeacontool --inpcap=$(INPCAP) --outpcap=$@ --inoui15=smashbros_gameusav102_beaconoui15.bin --inadditionaldata=smashbrosfullgame_beaconseq1.bin
 
-smashbrosfullgame_beaconseq2.pcap: smashbros_gamewestv102_beaconoui15.bin smashbrosfullgame_beaconseq2.bin
-	ctr-wlanbeacontool --inpcap=$(INPCAP) --outpcap=$@ --inoui15=smashbros_gamewestv102_beaconoui15.bin --inadditionaldata=smashbrosfullgame_beaconseq2.bin
+smashbrosfullgame_beaconseq2.pcap: smashbros_gameusav102_beaconoui15.bin smashbrosfullgame_beaconseq2.bin
+	ctr-wlanbeacontool --inpcap=$(INPCAP) --outpcap=$@ --inoui15=smashbros_gameusav102_beaconoui15.bin --inadditionaldata=smashbrosfullgame_beaconseq2.bin
 
-smashbrosfullgame_beaconseq3.pcap: smashbros_gamewestv102_beaconoui15.bin smashbrosfullgame_beaconseq3.bin
-	ctr-wlanbeacontool --inpcap=$(INPCAP) --outpcap=$@ --inoui15=smashbros_gamewestv102_beaconoui15.bin --inadditionaldata=smashbrosfullgame_beaconseq3.bin
+smashbrosfullgame_beaconseq3.pcap: smashbros_gameusav102_beaconoui15.bin smashbrosfullgame_beaconseq3.bin
+	ctr-wlanbeacontool --inpcap=$(INPCAP) --outpcap=$@ --inoui15=smashbros_gameusav102_beaconoui15.bin --inadditionaldata=smashbrosfullgame_beaconseq3.bin
 
-smashbrosfullgame_beaconseq5.pcap: smashbros_gamewestv102_beaconoui15.bin smashbrosfullgame_beaconseq5.bin
-	ctr-wlanbeacontool --inpcap=$(INPCAP) --outpcap=$@ --inoui15=smashbros_gamewestv102_beaconoui15.bin --inadditionaldata=smashbrosfullgame_beaconseq5.bin
+smashbrosfullgame_beaconseq5.pcap: smashbros_gameusav102_beaconoui15.bin smashbrosfullgame_beaconseq5.bin
+	ctr-wlanbeacontool --inpcap=$(INPCAP) --outpcap=$@ --inoui15=smashbros_gameusav102_beaconoui15.bin --inadditionaldata=smashbrosfullgame_beaconseq5.bin
 
 smashbrosusa_demo_beaconoui15.bin: smashbrosusa_demo_beaconoui15.elf
 	$(OBJCOPY) -O binary $< $@
@@ -68,13 +68,13 @@ smashbrosusa_demo_beaconoui15.bin: smashbrosusa_demo_beaconoui15.elf
 smashbroseur_demo_beaconoui15.bin: smashbroseur_demo_beaconoui15.elf
 	$(OBJCOPY) -O binary $< $@
 
-smashbros_gamewestv100_beaconoui15.bin: smashbros_gamewestv100_beaconoui15.elf
+smashbros_gameusav100_beaconoui15.bin: smashbros_gameusav100_beaconoui15.elf
 	$(OBJCOPY) -O binary $< $@
 
-smashbros_gamewestv102_beaconoui15.bin: smashbros_gamewestv102_beaconoui15.elf
+smashbros_gameusav102_beaconoui15.bin: smashbros_gameusav102_beaconoui15.elf
 	$(OBJCOPY) -O binary $< $@
 
-smashbros_gamewestv104_beaconoui15.bin: smashbros_gamewestv104_beaconoui15.elf
+smashbros_gameusav104_beaconoui15.bin: smashbros_gameusav104_beaconoui15.elf
 	$(OBJCOPY) -O binary $< $@
 
 smashbrosusa_demo_beacon_rop_payload.bin: smashbrosusa_demo_beacon_rop_payload.elf
@@ -83,13 +83,13 @@ smashbrosusa_demo_beacon_rop_payload.bin: smashbrosusa_demo_beacon_rop_payload.e
 smashbroseur_demo_beacon_rop_payload.bin: smashbroseur_demo_beacon_rop_payload.elf
 	$(OBJCOPY) -O binary $< $@
 
-smashbros_gamewestv100_beacon_rop_payload.bin: smashbros_gamewestv100_beacon_rop_payload.elf
+smashbros_gameusav100_beacon_rop_payload.bin: smashbros_gameusav100_beacon_rop_payload.elf
 	$(OBJCOPY) -O binary $< $@
 
-smashbros_gamewestv102_beacon_rop_payload.bin: smashbros_gamewestv102_beacon_rop_payload.elf
+smashbros_gameusav102_beacon_rop_payload.bin: smashbros_gameusav102_beacon_rop_payload.elf
 	$(OBJCOPY) -O binary $< $@
 
-smashbros_gamewestv104_beacon_rop_payload.bin: smashbros_gamewestv104_beacon_rop_payload.elf
+smashbros_gameusav104_beacon_rop_payload.bin: smashbros_gameusav104_beacon_rop_payload.elf
 	$(OBJCOPY) -O binary $< $@
 
 smashbrosfullgame_beaconseq0.bin: smashbrosfullgame_beaconseq0.elf
@@ -113,13 +113,13 @@ smashbrosusa_demo_beaconoui15.elf:	smashbros_beaconoui15.s
 smashbroseur_demo_beaconoui15.elf:	smashbros_beaconoui15.s
 	$(CC) -x assembler-with-cpp -nostartfiles -nostdlib -DREGION=2 -DAPPBUILD=0 -DLEWLANCOMMID=0x0014c110 -DBEWLANCOMMID=0x10c11400 $< -o $@
 
-smashbros_gamewestv100_beaconoui15.elf:	smashbros_beaconoui15.s
+smashbros_gameusav100_beaconoui15.elf:	smashbros_beaconoui15.s
 	$(CC) -x assembler-with-cpp -nostartfiles -nostdlib -DAPPBUILD=100 -DLEWLANCOMMID=0x000b8b10 -DBEWLANCOMMID=0x108b0b00 $< -o $@
 
-smashbros_gamewestv102_beaconoui15.elf:	smashbros_beaconoui15.s
+smashbros_gameusav102_beaconoui15.elf:	smashbros_beaconoui15.s
 	$(CC) -x assembler-with-cpp -nostartfiles -nostdlib -DAPPBUILD=102 -DLEWLANCOMMID=0x000b8b10 -DBEWLANCOMMID=0x108b0b00 $< -o $@
 
-smashbros_gamewestv104_beaconoui15.elf:	smashbros_beaconoui15.s
+smashbros_gameusav104_beaconoui15.elf:	smashbros_beaconoui15.s
 	$(CC) -x assembler-with-cpp -nostartfiles -nostdlib -DAPPBUILD=104 -DLEWLANCOMMID=0x000b8b10 -DBEWLANCOMMID=0x108b0b00 $< -o $@
 
 smashbrosusa_demo_beacon_rop_payload.elf:	smashbros_beacon_rop_payload.s
@@ -128,13 +128,13 @@ smashbrosusa_demo_beacon_rop_payload.elf:	smashbros_beacon_rop_payload.s
 smashbroseur_demo_beacon_rop_payload.elf:	smashbros_beacon_rop_payload.s
 	$(CC) -x assembler-with-cpp -nostartfiles -nostdlib -DREGION=2 -DAPPBUILD=0 -DPAYLOADURL=\"$(PAYLOADURL)\" $< -o $@
 
-smashbros_gamewestv100_beacon_rop_payload.elf:	smashbros_beacon_rop_payload.s
+smashbros_gameusav100_beacon_rop_payload.elf:	smashbros_beacon_rop_payload.s
 	$(CC) -x assembler-with-cpp -nostartfiles -nostdlib -DAPPBUILD=100 -DPAYLOADURL=\"$(PAYLOADURL)\" $< -o $@
 
-smashbros_gamewestv102_beacon_rop_payload.elf:	smashbros_beacon_rop_payload.s
+smashbros_gameusav102_beacon_rop_payload.elf:	smashbros_beacon_rop_payload.s
 	$(CC) -x assembler-with-cpp -nostartfiles -nostdlib -DAPPBUILD=102 -DPAYLOADURL=\"$(PAYLOADURL)\" $< -o $@
 
-smashbros_gamewestv104_beacon_rop_payload.elf:	smashbros_beacon_rop_payload.s
+smashbros_gameusav104_beacon_rop_payload.elf:	smashbros_beacon_rop_payload.s
 	$(CC) -x assembler-with-cpp -nostartfiles -nostdlib -DAPPBUILD=104 -DPAYLOADURL=\"$(PAYLOADURL)\" $< -o $@
 
 smashbrosfullgame_beaconseq0.elf:	smashbrosfullgame_beaconseq0.s

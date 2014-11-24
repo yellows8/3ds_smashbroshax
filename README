@@ -3,13 +3,11 @@ In certain cases the application may somewhat hang instead of crashing. Note tha
 
 Supported application builds:
 * demo: USA+EUR supported and tested.
-* v1.0.0. West: supported, only tested with USA.
-* v1.0.2. West: not tested.
-* v1.0.4. West: supported+tested.
+* v1.0.0. USA: supported+tested.
+* v1.0.2. USA: supported, not tested.
+* v1.0.4. USA: supported+tested.
 
 EUR and JPN full-game .code binaries addresses-wise are basically the same, for v1.0.4 at least. Both regions are not supported atm.
-
-West = USA/EUR, the full-game .code is basically the same for both it seems. The JPN .code is slightly different.
 
 ctr-wlanbeacontool from here is required: https://github.com/yellows8/ctr-wlanbeacontool
 
