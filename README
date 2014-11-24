@@ -7,7 +7,7 @@ Supported application builds:
 * v1.0.2. West: not tested.
 * v1.0.4. West: supported+tested.
 
-EUR full-game is not supported currently due to different addrs(for v1.0.4 at least).
+EUR and JPN full-game is not supported currently due to different addrs(for v1.0.4 at least).
 
 West = USA/EUR, the full-game .code is basically the same for both it seems. The JPN .code is slightly different.
 
