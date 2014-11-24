@@ -105,9 +105,7 @@
 
 #elif APPBUILD==104//Full-game v1.0.4.
 
-#if REGION==3//JPN
-#error "This appbuild+region isn't fully supported."
-#else
+#if REGION==1//USA
 
 #define ADDITIONALDATA_ADR 0x00be97e8
 #define STACKPIVOT_ADR 0x0012df38
@@ -134,6 +132,34 @@
 #define GSPGPU_FLUSHDCACHE 0x0016300c
 
 #define GXLOW_CMD4 0x00178af4
+
+#else
+
+#define ADDITIONALDATA_ADR 0x00be97e8
+#define STACKPIVOT_ADR 0x0012df34
+#define POP_PC 0x0010dbf8
+#define POP_R0R4SLIPPC 0x001d67b4
+#define POP_R0PC 0x001c765c
+
+#define ROP_LDRR1R1_STRR1R0 0x003542dc
+#define ROP_MOVR1R3_BXIP 0x0057f46c
+#define ROP_LDRR2R0_SUBR1R2R1_STRR1R0 0x005e32a8
+#define ROP_LDRR1R5_MOVR0R8_BLXR7 0x00a7c6bc
+
+#define MEMCPY 0x00175148
+
+#define SVCSLEEPTHREAD 0x001b51c8
+
+#define SRV_GETSERVICEHANDLE 0x0014969c
+
+#define NWMUDS_RecvBeaconBroadcastData 0x0035e228
+
+#define LOCALWLAN_SHUTDOWN 0x0035f284
+
+#define GSPGPU_SERVHANDLEADR 0x00b614a8
+#define GSPGPU_FLUSHDCACHE 0x00163008
+
+#define GXLOW_CMD4 0x00178af0
 
 #endif
 
@@ -165,6 +191,7 @@
 #define BEACONDATA_ADR TMPBUF_ADR+0x4000 //ADDITIONALDATA_ADR+0xb8
 #define BEACONTAGDATA_OUITYPE80_OFFSET (0xc + 0x1c + 0x1bc)
 #define BEACONTAGDATA_OUITYPE80_ADR (BEACONDATA_ADR + BEACONTAGDATA_OUITYPE80_OFFSET) //Offset 0x0 in the tag-data in the tag for OUI type 0x80(from smashbros_beacon_rop_payload.s).
+#define RELOCATED_STACKADDR TMPBUF_ADR+0x6000
 
 #endif
 

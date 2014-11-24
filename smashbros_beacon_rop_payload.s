@@ -147,8 +147,8 @@ bl ACU_GetWifiStatus
 cmp r0, #0
 bne ACU_WaitInternetConnection_lp
 ldr r0, [sp, #8]
-cmp r0, #1
-bne ACU_WaitInternetConnection_lp
+cmp r0, #0
+beq ACU_WaitInternetConnection_lp
 
 ldr r0, [sp, #4]
 blx svcCloseHandle
@@ -485,7 +485,7 @@ pop {r4, r5, pc}
 .pool
 
 init_sp:
-ldr r0, =(TMPBUF_ADR+0x5000)
+ldr r0, =RELOCATED_STACKADDR
 mov sp, r0
 bx lr
 .pool
