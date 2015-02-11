@@ -163,6 +163,38 @@
 
 #endif
 
+#elif APPBUILD==105//Full-game v1.0.5.
+
+#if REGION==1//USA
+
+#define ADDITIONALDATA_ADR 0x00c9f018
+#define STACKPIVOT_ADR 0x0012daf0
+#define POP_PC 0x0010a96c
+#define POP_R0R4SLIPPC 0x001bf7b4
+#define POP_R0PC 0x001b0a54
+
+#define ROP_LDRR1R1_STRR1R0 0x0034b1dc
+#define ROP_MOVR1R3_BXIP 0x005a8314
+#define ROP_LDRR2R0_SUBR1R2R1_STRR1R0 0x00612504
+#define ROP_LDRR1R5_MOVR0R8_BLXR7 0x00afb174
+
+#define MEMCPY 0x00170140
+
+#define SVCSLEEPTHREAD 0x001a117c
+
+#define SRV_GETSERVICEHANDLE 0x0014940c
+
+#define NWMUDS_RecvBeaconBroadcastData 0x00355158
+
+#define LOCALWLAN_SHUTDOWN 0x003561b4
+
+#define GSPGPU_SERVHANDLEADR 0x00beac0c
+#define GSPGPU_FLUSHDCACHE 0x00161f70
+
+#define GXLOW_CMD4 0x00174b8c
+
+#endif
+
 #else
 
 #error "The specified APPBUILD value is not supported."
@@ -182,7 +214,11 @@
 
 #define TEXT_APPMEM_OFFSET 0x00a00000
 
+#if APPBUILD < 105
 #define ADDITONALDATA_SIZE1 0x2092
+#else
+#define ADDITONALDATA_SIZE1 0x2056
+#endif
 #endif
 
 #define TMPBUF_ADR 0x33B50000
