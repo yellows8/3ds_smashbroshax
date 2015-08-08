@@ -10,7 +10,7 @@ Supported application builds:
 * v1.0.0. USA: supported+tested.
 * v1.0.2. USA: supported, not tested.
 * v1.0.4. USA: supported+tested. "gameother": supported, not tested.
-* v1.0.5. USA: "supported". The target heap address for overwriting the target object varies, hence this hax doesn't actually work right with this version.
+* v1.0.5. USA: "supported". The target heap address for overwriting the target object varies, hence this hax doesn't actually work right with this version(this might not matter?).
 
 Last version tested with this vuln was v1.1.0, vuln still isn't fixed with that version.
 
@@ -21,4 +21,3 @@ ctr-wlanbeacontool from here is required: https://github.com/yellows8/ctr-wlanbe
 One way to send the beacon is with aireplay-ng, however that requires a patch, see aireplay-ng.patch. For example, to send the beacon with aireplay-ng: aireplay-ng --interactive -r {beaconpcap_path} -h {host mac from pcap} -x 10 {wifi interface}
 
 Note that the smashbrosfullgame_beaconseqX.pcap beacons aren't actually needed.
-
