@@ -1,12 +1,14 @@
 This is haxx for Super Smash Bros for 3DS, via local-WLAN beacon haxx. The haxx triggers while the application is scanning for local multiplayer sessions, when the beacon is being broadcasted.
 In certain cases the application may somewhat hang or crash prior to any actual ROP being run: this hax is not completely reliable due to heap layout not always being in the intended state.
 
+This repo was originally created on September 26, 2014.
+
 Note that because this is a local-WLAN beacon broadcast, *all* 3DS systems in range doing regular smash-3ds multiplayer session scanning will be affected by doing this broadcasting: either the system would crash/etc(such as when the hax version doesn't match the app version), or code would run on the system. Therefore, please don't broadcast this when there's 3DS systems in range which are not your own doing the above scanning.
 
 Remember to always broadcast the beacon on the same channel as specified in the beacon itself.
 
 Supported application builds:
-* demo: USA+EUR supported and tested.
+* demo: USA+EUR supported and tested. There's no difference between the regular demo and the "Special Demo" with this hax. This was the only version of Smash-3ds supported by this hax initially, until after the USA version of the game was released.
 * v1.0.0. USA: supported+tested.
 * v1.0.2. USA: supported, not tested.
 * v1.0.4. USA: supported+tested. "gameother": supported, not tested.
