@@ -1,5 +1,5 @@
 This is haxx for Super Smash Bros for 3DS, via local-WLAN beacon haxx. The haxx triggers while the application is scanning for local multiplayer sessions, when the beacon is being broadcasted.
-In certain cases the application may somewhat hang instead of crashing.
+In certain cases the application may somewhat hang or crash prior to any actual ROP being run: this hax is not completely reliable due to heap layout not always being in the intended state.
 
 Note that because this is a local-WLAN beacon broadcast, *all* 3DS systems in range doing regular smash-3ds multiplayer session scanning will be affected by doing this broadcasting: either the system would crash/etc(such as when the hax version doesn't match the app version), or code would run on the system. Therefore, please don't broadcast this when there's 3DS systems in range which are not your own doing the above scanning.
 
@@ -28,4 +28,6 @@ ctr-wlanbeacontool from here is required: https://github.com/yellows8/ctr-wlanbe
 One way to send the beacon is with aireplay-ng, however that requires a patch, see aireplay-ng.patch. For example, to send the beacon with aireplay-ng: aireplay-ng --interactive -r {beaconpcap_path} -h {host mac from pcap} -x 10 {wifi interface}
 
 Note that the smashbrosfullgame_beaconseqX.pcap beacons aren't actually needed.
+
+This can be used with the homebrew-launcher otherapp payload to boot into hbmenu. However, doing so is New3DS-only: just like regionFOUR, the current application process has to terminate for Home Menu takeover to work, and smash-bros process termination on Old3DS results in a hardware-reboot(just like normal smash-bros application exiting).
 
