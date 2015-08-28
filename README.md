@@ -16,6 +16,13 @@ Last version tested with this vuln was v1.1.0, vuln still isn't fixed with that 
 
 EUR and JPN full-game .code binaries addresses-wise are basically the same, for v1.0.4 at least. Hence, the filenames for these two regions include "gameother".
 
+This can't be completely blocked with the main app without a system-update: even if an app-update would fix it, one could just rename/whatever the update-title directory on SD card to force the system to not use the update-title(the directory name could be restored to the original later when not using this hax). One could also do this if the currently installed update-title version is not supported, or when the latest version of the update-title isn't supported(where the currently installed version isn't supported).  
+The above mentioned directory is at the following SD card location: "/Nintendo 3DS/{ID0}/{ID1}/title/0004000e/{TIDHigh}".
+Where TIDHigh for the update-title is one of the following:
+* USA: 000edf00
+* EUR: 000ee000
+* JPN: 000b8b00
+
 ctr-wlanbeacontool from here is required: https://github.com/yellows8/ctr-wlanbeacontool
 
 One way to send the beacon is with aireplay-ng, however that requires a patch, see aireplay-ng.patch. For example, to send the beacon with aireplay-ng: aireplay-ng --interactive -r {beaconpcap_path} -h {host mac from pcap} -x 10 {wifi interface}
