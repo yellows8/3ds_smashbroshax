@@ -84,7 +84,7 @@ ropstart:
 
 .word SVCSLEEPTHREAD @ Delay 1 second so that the above cmd can finish, then jump to the loaded code.
 
-.word 0x00100000+0x1000
+.word 0x00100000+0x10000
 
 arm11code:
 add r1, pc, #1
@@ -543,7 +543,7 @@ bne load_payload_endload
 add r0, sp, #16
 ldr r1, [sp, #20]
 mov r2, r6
-ldr r3, =0x4000
+ldr r3, =0xa000
 bl HTTPC_ReceiveData
 cmp r0, #0
 bne load_payload_endload
@@ -595,7 +595,7 @@ str r0, [sp, #0] @ u32* total transfersize
 add r0, sp, #24 @ filehandle*
 mov r1, #0 @ u32 filepos
 mov r2, r6 @ buf
-ldr r3, =0x4000 @ size
+ldr r3, =0xa000 @ size
 bl fsfile_read
 mov r5, r0
 
@@ -646,10 +646,10 @@ blx r2
 mov r0, r6 @ srcaddr
 ldr r1, =GXLOWCMD4_DSTADR_PTR
 ldr r1, [r1]
-sub r1, r1, r7 @ Subtract out the .text+0x1000 offset.
-lsl r2, r7, #8
-add r1, r1, r2 @ dstaddr
-ldr r2, =0x4000 @ size
+lsl r2, r7, #4
+sub r1, r1, r2 @ Subtract out the .text+0x10000 offset.
+add r1, r1, r7 @ dstaddr
+ldr r2, =0xa000 @ size
 bl cpydat_gxlowcmd4
 
 ldr r0, =1000000000
@@ -676,8 +676,9 @@ ldr r1, =GSPGPU_SERVHANDLEADR
 str r1, [r6, #0x58]
 
 mov r0, r6
-ldr r1, =0x10000000
-lsl r2, r7, #9
+mov r1, sp
+lsl r2, r7, #8
+orr r2, r2, r7
 blx r2
 
 load_payload_end:
@@ -687,7 +688,8 @@ b load_payload_end
 overwrite_framebufs:
 ldr r0, =0x30000000
 ldr r1, =0x1f000000
-ldr r2, =0x100000
+mov r2, #0x1
+lsl r2, r2, #20
 
 cpydat_gxlowcmd4: @ r0=srcadr, r1=dstadr, r2=size
 push {r4, r5, lr}

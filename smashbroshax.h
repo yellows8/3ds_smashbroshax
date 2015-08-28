@@ -223,11 +223,11 @@
 
 #define TMPBUF_ADR 0x33B50000
 
-#define GXLOWCMD4_DSTADR_PTR TMPBUF_ADR+0x6000 //The value stored here is the dst-addr for gxlowcmd4.
-#define BEACONDATA_ADR TMPBUF_ADR+0x4000 //ADDITIONALDATA_ADR+0xb8
+#define GXLOWCMD4_DSTADR_PTR TMPBUF_ADR+0xc000 //The value stored here is the dst-addr for gxlowcmd4.
+#define BEACONDATA_ADR TMPBUF_ADR+0xa000 //ADDITIONALDATA_ADR+0xb8
 #define BEACONTAGDATA_OUITYPE80_OFFSET (0xc + 0x1c + 0x1bc)
 #define BEACONTAGDATA_OUITYPE80_ADR (BEACONDATA_ADR + BEACONTAGDATA_OUITYPE80_OFFSET) //Offset 0x0 in the tag-data in the tag for OUI type 0x80(from smashbros_beacon_rop_payload.s).
-#define RELOCATED_STACKADDR TMPBUF_ADR+0x6000
+//#define RELOCATED_STACKADDR TMPBUF_ADR+0x6000
 
 #endif
 

