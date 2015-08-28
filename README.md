@@ -5,8 +5,7 @@ This repo was originally created on September 26, 2014.
 
 Note that because this is a local-WLAN beacon broadcast, *all* 3DS systems in range doing regular smash-3ds multiplayer session scanning will be affected by doing this broadcasting: either the system would crash/etc(such as when the hax version doesn't match the app version), or code would run on the system. Therefore, please don't broadcast this when there's 3DS systems in range which are not your own doing the above scanning.
 
-Remember to always broadcast the beacon on the same channel as specified in the beacon itself.
-
+# Versions
 Supported application builds:
 * demo: USA+EUR supported and tested. There's no difference between the regular demo and the "Special Demo" with this hax. This was the only version of Smash-3ds supported by this hax initially, until after the USA version of the game was released.
 * v1.0.0. USA: supported+tested.
@@ -25,7 +24,11 @@ Where TIDHigh for the update-title is one of the following:
 * EUR: 000ee000
 * JPN: 000b8b00
 
+# Building
 ctr-wlanbeacontool from here is required: https://github.com/yellows8/ctr-wlanbeacontool
+
+# Usage
+Remember to always broadcast the beacon on the same channel as specified in the beacon itself.
 
 One way to send the beacon is with aireplay-ng, however that requires a patch, see aireplay-ng.patch. For example, to send the beacon with aireplay-ng: aireplay-ng --interactive -r {beaconpcap_path} -h {host mac from pcap} -x 10 {wifi interface}
 
