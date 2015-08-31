@@ -34,5 +34,5 @@ One way to send the beacon is with aireplay-ng, however that requires a patch, s
 
 Note that the smashbrosfullgame_beaconseqX.pcap beacons aren't actually needed.
 
-This can be used with the homebrew-launcher otherapp payload to boot into hbmenu. However, doing so is New3DS-only: just like regionFOUR, the current application process has to terminate for Home Menu takeover to work, and smash-bros process termination on Old3DS results in a hardware-reboot(just like normal smash-bros application exiting).
+This can be used with the homebrew-launcher otherapp payload to boot into hbmenu. However, doing so is New3DS-only, at the time of writing.
 
