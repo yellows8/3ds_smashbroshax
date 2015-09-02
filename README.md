@@ -5,6 +5,8 @@ Since this is all contained in a single wifi beacon, the amount of space availab
 
 This repo was originally created on September 26, 2014.
 
+This will not work on 3DS systems where config-mem UNITINFO(http://3dbrew.org/wiki/Configuration_Memory) is clear for dev-unit, unless you manually adjust the COMMID values in the Makefile.
+
 Note that because this is a local-WLAN beacon broadcast, *all* 3DS systems in range doing regular smash-3ds multiplayer session scanning will be affected by doing this broadcasting: either the system would crash/etc(such as when the hax version doesn't match the app version), or code would run on the system(which normally would only end up executing an infinite loop due to failing to load the payload, unless the hax was built with PAYLOADURL). Therefore, please don't broadcast this when there's 3DS systems in range which are not your own doing the above scanning.
 
 # Versions
