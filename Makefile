@@ -61,8 +61,8 @@ endif
 .PHONY: clean all
 
 all:
-	mkdir -p pcap_out
-	mkdir -p build
+	@mkdir -p pcap_out
+	@mkdir -p build
 	@make buildhax --no-print-directory $(PARAMS) BUILDNAME=usademo APPBUILD=0 REGION=1 $(COMMIDS_DEMO)
 	@make buildhax --no-print-directory $(PARAMS) BUILDNAME=eurdemo APPBUILD=0 REGION=2 $(COMMIDS_DEMO)
 	@make buildhax --no-print-directory $(PARAMS) BUILDNAME=gameusav100 APPBUILD=100 REGION=1 $(COMMIDS_FULLGAME)
