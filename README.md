@@ -1,5 +1,5 @@
 This is haxx for Super Smash Bros for 3DS, via local-WLAN beacon haxx. The haxx triggers while the application is scanning for local multiplayer sessions, when the beacon is being broadcasted.
-In certain cases the application may somewhat hang or crash prior to any actual ROP being run: this hax is not completely reliable due to heap layout not always being in the intended state.
+In certain cases the application may somewhat hang or crash prior to any actual ROP being run: this hax is not completely reliable due to heap layout not always being in the intended state. Also note that in some cases it may take a while for the hax to trigger.
 
 This repo was originally created on September 26, 2014.
 
@@ -12,6 +12,7 @@ Supported application builds:
 * v1.0.2. USA: supported, not tested.
 * v1.0.4. USA: supported+tested. "gameother": supported, not tested.
 * v1.0.5. USA: "supported". The target heap address for overwriting the target object varies, hence this hax doesn't actually work right with this version. This version is not fully supported due to this. This issue doesn't seem to apply with v1.1.0.
+* v1.1.0. USA: supported+tested. "gameother": supported, not tested.
 
 Last version tested with this vuln was v1.1.0, vuln still isn't fixed with that version.
 
@@ -32,5 +33,7 @@ Remember to always broadcast the beacon on the same channel as specified in the 
 
 One way to send the beacon is with aireplay-ng, however that requires a patch, see aireplay-ng.patch. For example, to send the beacon with aireplay-ng: aireplay-ng --interactive -r {beaconpcap_path} -h {host mac from pcap} -x 10 {wifi interface}
 
-This can be used with the homebrew-launcher otherapp payload to boot into hbmenu. However, doing so is New3DS-only, at the time of writing.
+This can be used with the homebrew-launcher otherapp payload to boot into hbmenu. However, doing so is New3DS-only, at the time of writing. With game-version v1.1.0, the initial otherapp payload gfx isn't displayed correctly(when home-menu takeover is being done), however it's fine after that.
+
+Right after the initial arm11code initializes stack, it will overwrite the framebuffers in VRAM with junk, to indicate that the code is running. Originally this was intended for the top-screen, however with v1.1.0 this ends up only overwritting the bottom-screen framebuffers.
 
