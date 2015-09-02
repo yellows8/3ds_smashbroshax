@@ -1,0 +1,25 @@
+--patterndata=190efc75e485fd37a6ed94e2f1c6e8208665ca65f07a8208195f356c30315a60 --patterndatamask=ffffffffffffffffffffffff000000ff --patternsha256size=0x10 --dataload=0x1c "--plainout=#define ADDITIONALDATA_ADR "
+--patterndata=e362c15aa4b748d62a40e0d02576e087635e533ebf78b769d7b74af0ff9544d9 --patternsha256size=0x1c "--plainout=#define STACKPIVOT_ADR "
+--patterndata=842555e8c82550c2c431530590fe143174ca0d28d1e35a941b87cdee5e5fd465 --patternsha256size=0x4 "--plainout=#define POP_PC "
+--patterndata=4b8fc8d858becc71c51b3bf870b1dc83f565e2f3b71c3e8d8c522c23d09fb72e --patternsha256size=0x4 "--plainout=#define POP_R0R4SLIPPC "
+--patterndata=e0160ca8a7f0ec85bd4b01d8756fb82e38344124545f0a7d58ae2ac288da17cc --patternsha256size=0x4 "--plainout=#define POP_R0PC "
+
+--patterndata=aa6a623d7c3291340160fd74738249e68b3b4ac2b59cd2c9b5846adcfefb702f --patternsha256size=0xc "--plainout=#define ROP_LDRR1R1_STRR1R0 "
+--patterndata=783e1007d4808f89c1b1fde53a71dd6fff0d9cd7eb59cee7fb0993e1bb1aae38 --patternsha256size=0x8 "--plainout=#define ROP_MOVR1R3_BXIP "
+--patterndata=fa5ba7c5a9c49b9d0d45a31b6528c9c629b525a5089d2a05bbecfec4cec0d3e7 --patternsha256size=0x10 "--plainout=#define ROP_LDRR2R0_SUBR1R2R1_STRR1R0 "
+--patterndata=bbaea1c9b9a51e5748c8e3881ea2583ce5656534e3ee4d9737c94eb5f1b75d46 --patternsha256size=0xc "--plainout=#define ROP_LDRR1R5_MOVR0R8_BLXR7 "
+
+--patterndata=3dd9c6c8a88e2ee07f9d0debcb5ef3b5ff142f0b3c6548616418bb749bb4d860 --patternsha256size=0x1c "--plainout=#define MEMCPY "
+
+--patterndata=a424f8b938aa4919842c18cf173c854c6412bacc5bf48ff0abbb7164e69ec507 --patternsha256size=0x8 "--plainout=#define SVCSLEEPTHREAD "
+
+--patterndata=366bba65c8afca3ec78dd6272bb147fa894866e38bc85642c68fa491c3f7905f --patternsha256size=0x18 "--plainout=#define SRV_GETSERVICEHANDLE "
+
+--patterndata=5a978b123b2364d3a45dfa3b6731b77aa02cb755cf685239871322d2ec0c6c03 --patternsha256size=0x24 "--plainout=#define NWMUDS_RecvBeaconBroadcastData "
+
+--patterndata=a90449b9d7b737b037ff7f9b1f581f1406ad14f0f66cc3fe987739912060444e --patterndatamask=ffffffffffffffffffffffffffffffffffffffff000000ff000000ffffffffff000000ff --patternsha256size=0x24 "--plainout=#define LOCALWLAN_SHUTDOWN "
+
+--patterndata=56d7a4a092f431aca4c7091f82482481324df2fd1e27fd86a6d7cd4904ca9af2 --patterndatamask=ffffffffffffffffffffffffffffffffffffffffffffffffffffffff000000ffffffffff --patternsha256size=0x24 --dataload=0x28 "--plainout=#define GSPGPU_SERVHANDLEADR "
+--patterndata=13e4f43b6452910ff7a0dc1804e38c4e5dba166750871a37c7beefd22995a484 --patternsha256size=0x18 "--plainout=#define GSPGPU_FlushDataCache "
+
+--patterndata=406e130dfe0a99ba64c16ac6ec4a53355cb36f090647b73c5382ea180c88e72c --patternsha256size=0x30 "--plainout=#define GXLOW_CMD4 "
