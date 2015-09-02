@@ -1,5 +1,5 @@
 This is haxx for Super Smash Bros for 3DS, via local-WLAN beacon haxx. The haxx triggers while the application is scanning for local multiplayer sessions, when the beacon is being broadcasted.
-In certain cases the application may somewhat hang or crash prior to any actual ROP being run: this hax is not completely reliable due to heap layout not always being in the intended state. Also note that in some cases it may take a while for the hax to trigger.
+In certain cases the application may somewhat hang or crash prior to any actual ROP being run: this hax is not completely reliable, one reason is because the heap layout not always being in the intended state. Another reason is that the ROP may fail to recv another beacon quickly enough, which results in jumping to using a stack which is all-zeros(there's no good way to do error checking/looping for that, partly because of lack of space). Also note that in some cases it may take a while for the hax to trigger.
 
 Since this is all contained in a single wifi beacon, the amount of space available for the hax is very small: currently almost all of this space is used.
 
