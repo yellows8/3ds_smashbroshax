@@ -56,6 +56,8 @@ endif
 .PHONY: clean all
 
 all:
+	mkdir -p pcap_out
+	mkdir -p build
 	@make buildhax --no-print-directory $(PARAMS) BUILDNAME=usademo APPBUILD=0 REGION=1 $(COMMIDS_DEMO)
 	@make buildhax --no-print-directory $(PARAMS) BUILDNAME=eurdemo APPBUILD=0 REGION=2 $(COMMIDS_DEMO)
 	@make buildhax --no-print-directory $(PARAMS) BUILDNAME=gameusav100 APPBUILD=100 REGION=1 $(COMMIDS_FULLGAME)
@@ -65,36 +67,24 @@ all:
 	@make buildhax --no-print-directory $(PARAMS) BUILDNAME=gameusav105 APPBUILD=105 REGION=1 $(COMMIDS_FULLGAME)
 
 clean:
-	@make cleanbuild --no-print-directory $(PARAMS) BUILDNAME=usademo
-	@make cleanbuild --no-print-directory $(PARAMS) BUILDNAME=eurdemo
-	@make cleanbuild --no-print-directory $(PARAMS) BUILDNAME=gameusav100
-	@make cleanbuild --no-print-directory $(PARAMS) BUILDNAME=gameusav102
-	@make cleanbuild --no-print-directory $(PARAMS) BUILDNAME=gameusav104
-	@make cleanbuild --no-print-directory $(PARAMS) BUILDNAME=gameotherv104
-	@make cleanbuild --no-print-directory $(PARAMS) BUILDNAME=gameusav105
+	@rm -f build
+	@rm -f pcap_out
 
 buildhax:
-	@make smashbros_$(BUILDNAME)_beaconhax.pcap --no-print-directory $(PARAMS)
+	@make pcap_out/smashbros_$(BUILDNAME)_beaconhax.pcap --no-print-directory $(PARAMS)
 
-cleanbuild:
-	@rm -f smashbros_$(BUILDNAME)_beaconhax.pcap
-	@rm -f smashbros_$(BUILDNAME)_beaconoui15.bin
-	@rm -f smashbros_$(BUILDNAME)_beaconoui15.elf
-	@rm -f smashbros_$(BUILDNAME)_beacon_rop_payload.bin
-	@rm -f smashbros_$(BUILDNAME)_beacon_rop_payload.elf
+pcap_out/smashbros_$(BUILDNAME)_beaconhax.pcap: build/smashbros_$(BUILDNAME)_beaconoui15.bin build/smashbros_$(BUILDNAME)_beacon_rop_payload.bin
+	ctr-wlanbeacontool --inpcap=$(INPCAP) --outpcap=$@ --inoui15=build/smashbros_$(BUILDNAME)_beaconoui15.bin --addtagex=0xfe,0x2,build/smashbros_$(BUILDNAME)_beacon_rop_payload.bin
 
-smashbros_$(BUILDNAME)_beaconhax.pcap: smashbros_$(BUILDNAME)_beaconoui15.bin smashbros_$(BUILDNAME)_beacon_rop_payload.bin
-	ctr-wlanbeacontool --inpcap=$(INPCAP) --outpcap=$@ --inoui15=smashbros_$(BUILDNAME)_beaconoui15.bin --addtagex=0xfe,0x2,smashbros_$(BUILDNAME)_beacon_rop_payload.bin
-
-smashbros_$(BUILDNAME)_beaconoui15.bin: smashbros_$(BUILDNAME)_beaconoui15.elf
+build/smashbros_$(BUILDNAME)_beaconoui15.bin: build/smashbros_$(BUILDNAME)_beaconoui15.elf
 	$(OBJCOPY) -O binary $< $@
 
-smashbros_$(BUILDNAME)_beacon_rop_payload.bin: smashbros_$(BUILDNAME)_beacon_rop_payload.elf
+build/smashbros_$(BUILDNAME)_beacon_rop_payload.bin: build/smashbros_$(BUILDNAME)_beacon_rop_payload.elf
 	$(OBJCOPY) -O binary $< $@
 
-smashbros_$(BUILDNAME)_beaconoui15.elf:	smashbros_beaconoui15.s
+build/smashbros_$(BUILDNAME)_beaconoui15.elf:	smashbros_beaconoui15.s
 	$(CC) -x assembler-with-cpp -nostartfiles -nostdlib $(DEFINES) $< -o $@
 
-smashbros_$(BUILDNAME)_beacon_rop_payload.elf:	smashbros_beacon_rop_payload.s
+build/smashbros_$(BUILDNAME)_beacon_rop_payload.elf:	smashbros_beacon_rop_payload.s
 	$(CC) -x assembler-with-cpp -nostartfiles -nostdlib $(DEFINES) $< -o $@
 

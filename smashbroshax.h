@@ -31,7 +31,7 @@
 
 #define SRV_GETSERVICEHANDLE 0x001451f8 //r0=handle*, r1=servname, r2=servlen, r3=0
 
-#define NWMUDS_RecvBeaconBroadcastData 0x00314860 //r0=outbuf, r1=size, r2=u8id, r3=wlancommID
+#define NWMUDS_RecvBeaconBroadcastData 0x0031485c //r0=outbuf, r1=size, r2=u8id, r3=wlancommID
 
 #define LOCALWLAN_SHUTDOWN 0x003158bc //Calls nwmuds_shutdown code and some ndmu code.
 
@@ -64,7 +64,7 @@
 
 #define SRV_GETSERVICEHANDLE 0x0014a000
 
-#define NWMUDS_RecvBeaconBroadcastData 0x0035df7c
+#define NWMUDS_RecvBeaconBroadcastData 0x0035df78
 
 #define LOCALWLAN_SHUTDOWN 0x0035efd8
 
@@ -94,7 +94,7 @@
 
 #define SRV_GETSERVICEHANDLE 0x001495e8
 
-#define NWMUDS_RecvBeaconBroadcastData 0x0035cf84
+#define NWMUDS_RecvBeaconBroadcastData 0x0035cf80
 
 #define LOCALWLAN_SHUTDOWN 0x0035dfe0
 
@@ -124,7 +124,7 @@
 
 #define SRV_GETSERVICEHANDLE 0x001496a0
 
-#define NWMUDS_RecvBeaconBroadcastData 0x0035e228
+#define NWMUDS_RecvBeaconBroadcastData 0x0035e224
 
 #define LOCALWLAN_SHUTDOWN 0x0035f284
 
@@ -152,7 +152,7 @@
 
 #define SRV_GETSERVICEHANDLE 0x0014969c
 
-#define NWMUDS_RecvBeaconBroadcastData 0x0035e228
+#define NWMUDS_RecvBeaconBroadcastData 0x0035e224
 
 #define LOCALWLAN_SHUTDOWN 0x0035f284
 
@@ -184,7 +184,7 @@
 
 #define SRV_GETSERVICEHANDLE 0x0014940c
 
-#define NWMUDS_RecvBeaconBroadcastData 0x00355158
+#define NWMUDS_RecvBeaconBroadcastData 0x00355154
 
 #define LOCALWLAN_SHUTDOWN 0x003561b4
 

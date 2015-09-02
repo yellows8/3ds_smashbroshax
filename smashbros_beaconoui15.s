@@ -68,7 +68,7 @@ ropstackstart:
 .word 0 @ sl
 .word 0 @ ip
 
-.word NWMUDS_RecvBeaconBroadcastData @ Recv a beacon, with outbuf at BEACONDATA_ADR.
+.word NWMUDS_RecvBeaconBroadcastData+4 @ Recv a beacon, with outbuf at BEACONDATA_ADR.
 
 .word POP_LRPC
 .word (BEACONTAGDATA_OUITYPE80_ADR+4) - 4 @ lr, later moved into sp.
