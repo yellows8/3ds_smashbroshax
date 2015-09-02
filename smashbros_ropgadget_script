@@ -20,6 +20,6 @@
 --patterndata=a90449b9d7b737b037ff7f9b1f581f1406ad14f0f66cc3fe987739912060444e --patterndatamask=ffffffffffffffffffffffffffffffffffffffff000000ff000000ffffffffff000000ff --patternsha256size=0x24 "--plainout=#define LOCALWLAN_SHUTDOWN "
 
 --patterndata=56d7a4a092f431aca4c7091f82482481324df2fd1e27fd86a6d7cd4904ca9af2 --patterndatamask=ffffffffffffffffffffffffffffffffffffffffffffffffffffffff000000ffffffffff --patternsha256size=0x24 --dataload=0x28 "--plainout=#define GSPGPU_SERVHANDLEADR "
---patterndata=13e4f43b6452910ff7a0dc1804e38c4e5dba166750871a37c7beefd22995a484 --patternsha256size=0x18 "--plainout=#define GSPGPU_FlushDataCache "
+--patterndata=13e4f43b6452910ff7a0dc1804e38c4e5dba166750871a37c7beefd22995a484 --patternsha256size=0x18 "--plainout=#define GSPGPU_FLUSHDCACHE "
 
 --patterndata=406e130dfe0a99ba64c16ac6ec4a53355cb36f090647b73c5382ea180c88e72c --patternsha256size=0x30 "--plainout=#define GXLOW_CMD4 "

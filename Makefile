@@ -15,6 +15,7 @@ endif
 
 DEFINES	:=	
 PARAMS	:=	INPCAP=$(INPCAP)
+INCLUDECMD	:=	
 
 COMMIDS_DEMO	:=	LEWLANCOMMID=0x0014c110 BEWLANCOMMID=0x10c11400
 COMMIDS_FULLGAME	:=	LEWLANCOMMID=0x000b8b10 BEWLANCOMMID=0x108b0b00
@@ -53,6 +54,10 @@ ifneq ($(strip $(BEWLANCOMMID)),)
 	DEFINES	:=	$(DEFINES) -DBEWLANCOMMID=$(BEWLANCOMMID)
 endif
 
+ifneq ($(strip $(ROP_PATH)),)
+	INCLUDECMD	:=	-include prebuilt_smashbrosrop/$(ROP_PATH)
+endif
+
 .PHONY: clean all
 
 all:
@@ -61,14 +66,14 @@ all:
 	@make buildhax --no-print-directory $(PARAMS) BUILDNAME=usademo APPBUILD=0 REGION=1 $(COMMIDS_DEMO)
 	@make buildhax --no-print-directory $(PARAMS) BUILDNAME=eurdemo APPBUILD=0 REGION=2 $(COMMIDS_DEMO)
 	@make buildhax --no-print-directory $(PARAMS) BUILDNAME=gameusav100 APPBUILD=100 REGION=1 $(COMMIDS_FULLGAME)
-	@make buildhax --no-print-directory $(PARAMS) BUILDNAME=gameusav102 APPBUILD=102 REGION=1 $(COMMIDS_FULLGAME)
-	@make buildhax --no-print-directory $(PARAMS) BUILDNAME=gameusav104 APPBUILD=104 REGION=1 $(COMMIDS_FULLGAME)
-	@make buildhax --no-print-directory $(PARAMS) BUILDNAME=gameotherv104 APPBUILD=104 $(COMMIDS_FULLGAME)
-	@make buildhax --no-print-directory $(PARAMS) BUILDNAME=gameusav105 APPBUILD=105 REGION=1 $(COMMIDS_FULLGAME)
+	@make buildhax --no-print-directory $(PARAMS) BUILDNAME=gameusav102 APPBUILD=102 REGION=1 $(COMMIDS_FULLGAME) ROP_PATH=USA/1.0.2
+	@make buildhax --no-print-directory $(PARAMS) BUILDNAME=gameusav104 APPBUILD=104 REGION=1 $(COMMIDS_FULLGAME) ROP_PATH=USA/1.0.4
+	@make buildhax --no-print-directory $(PARAMS) BUILDNAME=gameotherv104 APPBUILD=104 $(COMMIDS_FULLGAME) ROP_PATH=gameother/1.0.4
+	@make buildhax --no-print-directory $(PARAMS) BUILDNAME=gameusav105 APPBUILD=105 REGION=1 $(COMMIDS_FULLGAME) ROP_PATH=USA/1.0.5
 
 clean:
-	@rm -f build
-	@rm -f pcap_out
+	@rm -R -f build
+	@rm -R -f pcap_out
 
 buildhax:
 	@make pcap_out/smashbros_$(BUILDNAME)_beaconhax.pcap --no-print-directory $(PARAMS)
@@ -83,8 +88,8 @@ build/smashbros_$(BUILDNAME)_beacon_rop_payload.bin: build/smashbros_$(BUILDNAME
 	$(OBJCOPY) -O binary $< $@
 
 build/smashbros_$(BUILDNAME)_beaconoui15.elf:	smashbros_beaconoui15.s
-	$(CC) -x assembler-with-cpp -nostartfiles -nostdlib $(DEFINES) $< -o $@
+	$(CC) -x assembler-with-cpp -nostartfiles -nostdlib $(INCLUDECMD) $(DEFINES) $< -o $@
 
 build/smashbros_$(BUILDNAME)_beacon_rop_payload.elf:	smashbros_beacon_rop_payload.s
-	$(CC) -x assembler-with-cpp -nostartfiles -nostdlib $(DEFINES) $< -o $@
+	$(CC) -x assembler-with-cpp -nostartfiles -nostdlib $(INCLUDECMD) $(DEFINES) $< -o $@
 
