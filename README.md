@@ -32,7 +32,5 @@ Remember to always broadcast the beacon on the same channel as specified in the 
 
 One way to send the beacon is with aireplay-ng, however that requires a patch, see aireplay-ng.patch. For example, to send the beacon with aireplay-ng: aireplay-ng --interactive -r {beaconpcap_path} -h {host mac from pcap} -x 10 {wifi interface}
 
-Note that the smashbrosfullgame_beaconseqX.pcap beacons aren't actually needed.
-
 This can be used with the homebrew-launcher otherapp payload to boot into hbmenu. However, doing so is New3DS-only, at the time of writing.
 
