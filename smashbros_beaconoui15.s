@@ -21,7 +21,6 @@ _start:
 @ Title-specific additional-data(little-endian):
 
 @ Neither of the below size fields are checked. In memory, the second data-block used with size1 for the memcpy is copied to: adr = buf0adr+size0 + (<value of s8 at additionaldata+0x2> * size1). Therefore, the size and the relative offset for the destination buffer can be controlled.
-@ This is used to trigger a memcpy with size 0x1898 with the data @ additionaldata+0x34, which then overwrites a c++ object. See below.
 
 additionaldata_start:
 .byte 0xff, 0xff

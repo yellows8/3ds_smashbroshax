@@ -1,9 +1,11 @@
 This is haxx for Super Smash Bros for 3DS, via local-WLAN beacon haxx. The haxx triggers while the application is scanning for local multiplayer sessions, when the beacon is being broadcasted.
 In certain cases the application may somewhat hang or crash prior to any actual ROP being run: this hax is not completely reliable due to heap layout not always being in the intended state. Also note that in some cases it may take a while for the hax to trigger.
 
+Since this is all contained in a single wifi beacon, the amount of space available for the hax is very small: currently almost all of this space is used.
+
 This repo was originally created on September 26, 2014.
 
-Note that because this is a local-WLAN beacon broadcast, *all* 3DS systems in range doing regular smash-3ds multiplayer session scanning will be affected by doing this broadcasting: either the system would crash/etc(such as when the hax version doesn't match the app version), or code would run on the system. Therefore, please don't broadcast this when there's 3DS systems in range which are not your own doing the above scanning.
+Note that because this is a local-WLAN beacon broadcast, *all* 3DS systems in range doing regular smash-3ds multiplayer session scanning will be affected by doing this broadcasting: either the system would crash/etc(such as when the hax version doesn't match the app version), or code would run on the system(which normally would only end up executing an infinite loop due to failing to load the payload, unless the hax was built with PAYLOADURL). Therefore, please don't broadcast this when there's 3DS systems in range which are not your own doing the above scanning.
 
 # Versions
 Supported application builds:
@@ -11,7 +13,7 @@ Supported application builds:
 * v1.0.0. USA: supported+tested.
 * v1.0.2. USA: supported, not tested.
 * v1.0.4. USA: supported+tested. "gameother": supported, not tested.
-* v1.0.5. USA: "supported". The target heap address for overwriting the target object varies, hence this hax doesn't actually work right with this version. This version is not fully supported due to this. This issue doesn't seem to apply with v1.1.0.
+* v1.0.5. USA: "supported". The target heap address for overwriting the target object varies, hence this hax doesn't actually work right with this version. This version is not fully supported due to this.
 * v1.1.0. USA: supported+tested. "gameother": supported, not tested.
 
 Last version tested with this vuln was v1.1.0, vuln still isn't fixed with that version.
@@ -28,6 +30,13 @@ Where TIDHigh for the update-title is one of the following:
 # Building
 ctr-wlanbeacontool from here is required: https://github.com/yellows8/ctr-wlanbeacontool
 
+Make params:
+* "INPCAP={path}" Required, this is the smash-beacon to use as a base. You must obtain a beacon for this yourself, when building this yourself.
+* "PAYLOADURL={url}" HTTP URL to download the payload from.
+* "PAYLOADPATH={sdpath}" SD path to load the payload from, for example: "PAYLOADPATH=/smashpayload.bin".
+
+Only one of the PAYLOAD* params must be specified.
+
 # Usage
 Remember to always broadcast the beacon on the same channel as specified in the beacon itself.
 
@@ -36,4 +45,6 @@ One way to send the beacon is with aireplay-ng, however that requires a patch, s
 This can be used with the homebrew-launcher otherapp payload to boot into hbmenu. However, doing so is New3DS-only, at the time of writing. With game-version v1.1.0, the initial otherapp payload gfx isn't displayed correctly(when home-menu takeover is being done), however it's fine after that.
 
 Right after the initial arm11code initializes stack, it will overwrite the framebuffers in VRAM with junk, to indicate that the code is running. Originally this was intended for the top-screen, however with v1.1.0 this ends up only overwritting the bottom-screen framebuffers.
+
+The baseaddr for the payload is 0x00111000, max size is 0xa000-bytes. Whenever loading the payload fails, the arm11code will just execute an infinite loop.
 
