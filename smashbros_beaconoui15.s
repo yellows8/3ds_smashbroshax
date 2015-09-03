@@ -10,7 +10,11 @@ _start:
 .byte 0x00, 0x1f, 0x32 @ OUI / first 0x1F-bytes of network-struct+0xC.
 .byte 0x15 @ OUI type
 .word BEWLANCOMMID
-.byte 0x00 @ u8 ID
+#ifndef BEACON_BYTEID
+.byte 0x0 @ u8 ID
+#else
+.byte BEACON_BYTEID
+#endif
 .byte 0x90, 0x80, 0x00
 .byte 0xB3, 0x20, 0x6F, 0x07 @ random u32, networkID
 .byte 0x01, 0x04, 0x00, 0x01
@@ -61,7 +65,11 @@ ropstackstart:
 .word POP_R0R4SLIPPC
 .word BEACONDATA_ADR @ r0, outbuf
 .word 0x600 @ r1, size
-.word 0 @ r2, u8 id
+#ifndef BEACON_BYTEID
+.word 0x0 @ r2, u8 id
+#else
+.word BEACON_BYTEID
+#endif
 .word LEWLANCOMMID @ r3, wlancommID
 .word 0 @ r4
 .word 0 @ sl

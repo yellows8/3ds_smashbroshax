@@ -36,6 +36,8 @@ Make params:
 * "INPCAP={path}" Required, this is the smash-beacon to use as a base. You must obtain a beacon for this yourself, when building this yourself.
 * "PAYLOADURL={url}" HTTP URL to download the payload from.
 * "PAYLOADPATH={sdpath}" SD path to load the payload from, for example: "PAYLOADPATH=/smashpayload.bin".
+* "ADDITONALDATA_SIZE1={val}" Use the specified value for the raw size value in the beacon additionaldata, instead of the default one. For example, with a large value this could be used to build vuln-test pcaps.
+* "BEACON_BYTEID={val}" Override the u8 ID used in the networkstruct(default is 0x0 for regular Smash multiplayer). 0x1 is smash-run(which works fine with this hax). 0x55 is WiiU comms: the vulnerable smash-3ds function is never executed with this however.
 
 Only one of the PAYLOAD* params must be specified.
 

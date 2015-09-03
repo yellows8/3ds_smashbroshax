@@ -85,7 +85,9 @@
 
 #define TEXT_APPMEM_OFFSET 0x00b00000 //Offset for physical-mem .text, relative to application mem-region end.
 
+#ifndef ADDITONALDATA_SIZE1
 #define ADDITONALDATA_SIZE1 0x18A0
+#endif
 #else//full-game
 //#define TMPBUF_ADR 0x33E18000//Full-game linearmem heap is smaller than the demo.
 
@@ -95,6 +97,7 @@
 #define TEXT_APPMEM_OFFSET 0x00b00000
 #endif
 
+#ifndef ADDITONALDATA_SIZE1
 #if APPBUILD < 105
 #define ADDITONALDATA_SIZE1 0x2092
 #else
@@ -102,6 +105,7 @@
 #define ADDITONALDATA_SIZE1 0x2056
 #elif APPBUILD==110
 #define ADDITONALDATA_SIZE1 0x20a6
+#endif
 #endif
 #endif
 #endif
