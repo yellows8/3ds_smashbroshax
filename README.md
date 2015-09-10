@@ -33,7 +33,7 @@ Where TIDHigh for the update-title is one of the following:
 ctr-wlanbeacontool from here is required: https://github.com/yellows8/ctr-wlanbeacontool
 
 Make params:
-* "INPCAP={path}" Required, this is the smash-beacon to use as a base. You must obtain a beacon for this yourself, when building this yourself.
+* "INPCAP={path}" This is the smash-beacon to use as a base. When used, the specified beacon is used instead of the default one("smashdemo_beacon_modbase.pcap").
 * "PAYLOADURL={url}" HTTP URL to download the payload from.
 * "PAYLOADPATH={sdpath}" SD path to load the payload from, for example: "PAYLOADPATH=/smashpayload.bin".
 * "ADDITONALDATA_SIZE1={val}" Use the specified value for the raw size value in the beacon additionaldata, instead of the default one. For example, with a large value this could be used to build vuln-test pcaps.
@@ -42,7 +42,7 @@ Make params:
 Only one of the PAYLOAD* params must be specified.
 
 # Usage
-Remember to always broadcast the beacon on the same channel as specified in the beacon itself.
+Remember to always broadcast the beacon on the same channel as specified in the beacon itself. The following data *must* *not* be changed in the beacon frame while it's being sent: host/BSSID MAC addresses, and all of the beacon tags. The MAC address with the default base pcap is: 59:ee:3f:2a:37:e0.
 
 One way to send the beacon is with aireplay-ng, however that requires a patch, see aireplay-ng.patch. For example, to send the beacon with aireplay-ng: aireplay-ng --interactive -r {beaconpcap_path} -h {host mac from pcap} -x 10 {wifi interface}
 

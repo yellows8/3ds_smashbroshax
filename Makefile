@@ -10,7 +10,7 @@ TOPDIR ?= $(CURDIR)
 include $(DEVKITARM)/base_rules
 
 ifeq ($(strip $(INPCAP)),)
-$(error "The INPCAP param is required.")
+	INPCAP	:=	smashdemo_beacon_modbase.pcap
 endif
 
 DEFINES	:=	
