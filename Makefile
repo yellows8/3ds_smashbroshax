@@ -76,6 +76,7 @@ all:
 	@make buildhax --no-print-directory $(PARAMS) BUILDNAME=usademo APPBUILD=0 REGION=1 $(COMMIDS_DEMO)
 	@make buildhax --no-print-directory $(PARAMS) BUILDNAME=eurdemo APPBUILD=0 REGION=2 $(COMMIDS_DEMO)
 	@make buildhax --no-print-directory $(PARAMS) BUILDNAME=gameusav100 APPBUILD=100 REGION=1 $(COMMIDS_FULLGAME)
+	@make buildhax --no-print-directory $(PARAMS) BUILDNAME=gameotherv100 APPBUILD=100 $(COMMIDS_FULLGAME)
 	@make buildhax --no-print-directory $(PARAMS) BUILDNAME=gameusav102 APPBUILD=102 REGION=1 $(COMMIDS_FULLGAME) ROP_PATH=USA/1.0.2
 	@make buildhax --no-print-directory $(PARAMS) BUILDNAME=gameusav104 APPBUILD=104 REGION=1 $(COMMIDS_FULLGAME) ROP_PATH=USA/1.0.4
 	@make buildhax --no-print-directory $(PARAMS) BUILDNAME=gameotherv104 APPBUILD=104 $(COMMIDS_FULLGAME) ROP_PATH=gameother/1.0.4

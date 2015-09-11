@@ -12,7 +12,7 @@ Note that because this is a local-WLAN beacon broadcast, *all* 3DS systems in ra
 # Versions
 Supported application builds:
 * demo: USA+EUR supported and tested. There's no difference between the regular demo and the "Special Demo" with this hax. This was the only version of Smash-3ds supported by this hax initially, until after the USA version of the game was released.
-* v1.0.0. USA: supported+tested.
+* v1.0.0. USA: supported+tested. "gameother": supported, not tested.
 * v1.0.2. USA: supported, not tested.
 * v1.0.4. USA: supported+tested. "gameother": supported, not tested.
 * v1.0.5. USA: "supported". The target heap address for overwriting the target object varies, hence this hax doesn't actually work right with this version. This version is not fully supported due to this.
