@@ -52,6 +52,8 @@ One way to send the beacon is with aireplay-ng, however that requires a patch, s
 
 This can be used with the homebrew-launcher otherapp payload to boot into hbmenu. However, doing so is New3DS-only, at the time of writing(supporting Old3DS with hb-launcher from this would require major changes). With game-version v1.1.0, the initial otherapp payload gfx isn't displayed correctly(when home-menu takeover is being done), however it's fine after that(this would ideally be fixed via an updated hb-launcher payload).
 
+Due to the different FCRAM memregions layout on Old3DS with smashbros, the system will do a hardware reboot when the smashbros process terminates. This happens when exiting the title via Home Menu. This also happens automatically when attempting to boot the hb-launcher payload on Old3DS. Therefore, the hb-launcher payload can only be booted successfully on New Nintendo 3DS and New Nintendo 3DS XL(at the time of writing).
+
 Right after the initial arm11code initializes stack, it will overwrite the framebuffers in VRAM with junk, to indicate that the code is running. Originally this was intended for the top-screen, however with v1.1.0 on new3ds this ends up only overwritting the bottom-screen framebuffers.
 
 The baseaddr for the payload is 0x00111000, max size is 0xa000-bytes. Whenever loading the payload fails, the arm11code will just execute an infinite loop.
