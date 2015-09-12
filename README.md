@@ -48,7 +48,7 @@ Remember to always broadcast the beacon on the same channel as specified in the 
 
 The built beacon-hax pcaps are located under "pcap_out/". In the filenames, "vXYZ" means game-version "vX.Y.Z". Full-game filenames for USA include "gameusa", while the other regions filenames include "gameother".
 
-One way to send the beacon is with aireplay-ng, however that requires a patch, see aireplay-ng.patch. For example, to send the beacon with aireplay-ng: aireplay-ng --interactive -r {beaconpcap_path} -h {host mac from pcap} -x 10 {wifi interface}
+One way to send the beacon is with aireplay-ng, however that requires a patch, see aireplay-ng.patch. For example, to send the beacon with aireplay-ng(the wifi interface must already be in monitor mode + be on the correct channel): aireplay-ng --interactive -r {beaconpcap_path} -h {host mac from pcap} -x 10 {wifi interface}
 
 This can be used with the homebrew-launcher otherapp payload to boot into hbmenu. However, doing so is New3DS-only, at the time of writing(supporting Old3DS with hb-launcher from this would require major changes). With game-version v1.1.0, the initial otherapp payload gfx isn't displayed correctly(when home-menu takeover is being done), however it's fine after that(this would ideally be fixed via an updated hb-launcher payload).
 
@@ -91,7 +91,7 @@ For example, the payload URL for New3DS USA 9.9.0-X - 10.0.0-X is: https://smeal
 * 1) Download the release archive.
 * 2) Download the otherapp payload to SD "/smashpayload.bin", as described under the "Homebrew Launcher Payload" section.
 * 3) Determine which pcap in the "pcap_out" directory to use, see the "Usage" section.
-* 4) Begin broadcasting the pcap on channel 6 with MAC address "59:ee:3f:2a:37:e0", with the beacon being sent at least 10 times per second.
+* 4) In wifi monitor mode, begin broadcasting the pcap on channel 6 with MAC address "59:ee:3f:2a:37:e0", with the beacon being sent at least 10 times per second.
 * 5) On the target 3DS system, start Super Smash Bros, then goto "Smash" -> "Group".
 * 6) The hax will then eventually trigger on the 3DS system.
 
