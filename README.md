@@ -59,35 +59,7 @@ Right after the initial arm11code initializes stack, it will overwrite the frame
 The baseaddr for the payload is 0x00111000, max size is 0xa000-bytes. Whenever loading the payload fails, the arm11code will just execute an infinite loop.
 
 # Homebrew Launcher Payload
-With the release builds, the hax loads the payload from SD "/smashpayload.bin". This should contain the hb-launcher(https://smealum.github.io/3ds/) otherapp payload. Until there's a proper otherapp payload selector on the hb-launcher site, the payload can be downloaded from the following URL(see also https://github.com/smealum/sploit_installer):  
-* "https://smealum.github.io/ninjhax2/Pvl9iD2Im5/otherapp/{PAYLOADNAME}.bin"
-Where {PAYLOADNAME} is: "FIRMVER_REGION_MENUVER_MSETVER".  
-
-FIRMVER values(without quotes):
-* "POST5" = non-New3DS
-* "N3DS" = New3DS
-
-REGION values(without quotes):
-* "U" = USA
-* "E" = EUR
-* "J" = JPN
-
-MENUVER values(without quotes):
-* "11272": Non-JPN, system-version v9.0.
-* "12288": System-version v9.2.
-* "13330": System-version v9.3.
-* "14336": System-version v9.4.
-* "15360": System-version v9.5.
-* "16404": System-version v9.6.
-* "17415": System-version v9.7.
-* "20480_usa": USA, system-versions v9.9-v10.0.
-* "19456": Non-USA, system-versions v9.8-v10.0.
-
-MSETVER values(without quotes):
-* "8203": System-versions below v9.6.
-* "9221": System-versions starting with v9.6.
-
-For example, the payload URL for New3DS USA 9.9.0-X - 10.0.0-X is: https://smealum.github.io/ninjhax2/Pvl9iD2Im5/otherapp/N3DS_U_20480_usa_9221.bin
+With the release builds, the hax loads the payload from SD "/smashpayload.bin". This should contain the hb-launcher(https://smealum.github.io/3ds/) otherapp payload, which can be downloaded with the otherapp-payload selector on that site.
 
 # Usage Guide
 * 1) Download the release archive.
