@@ -19,8 +19,9 @@ Supported application builds:
 * v1.0.4. USA: supported+tested. "gameother": supported, not tested.
 * v1.0.5. USA: "supported". The target heap address for overwriting the target object varies, hence this hax doesn't actually work right with this version. This version is not fully supported due to this.
 * v1.1.0. USA: supported+tested. "gameother": supported+tested.
+* v1.1.1. USA: supported+tested. "gameother": supported+tested.
 
-Last version tested with this vuln was v1.1.0, vuln still isn't fixed with that version.
+Last version tested with this vuln was v1.1.1, vuln still isn't fixed with that version.
 
 EUR and JPN full-game .code binaries addresses-wise are basically the same, for v1.0.4 at least. Hence, the filenames for these two regions include "gameother".
 
@@ -51,8 +52,6 @@ The built beacon-hax pcaps are located under "pcap_out/". In the filenames, "vXY
 One way to send the beacon is with aireplay-ng, however that requires a patch, see aireplay-ng.patch. For example, to send the beacon with aireplay-ng(the wifi interface must already be in monitor mode + be on the correct channel): aireplay-ng --interactive -r {beaconpcap_path} -h {host mac from pcap} -x 10 {wifi interface}
 
 This can be used with the homebrew-launcher otherapp payload to boot into hbmenu. However, doing so is New3DS-only, at the time of writing(supporting Old3DS with hb-launcher from this would require major changes). With game-version v1.1.0, the initial otherapp payload gfx isn't displayed correctly(when home-menu takeover is being done), however it's fine after that(this would ideally be fixed via an updated hb-launcher payload).
-
-Due to the different FCRAM memregions layout on Old3DS with smashbros, the system will do a hardware reboot when the smashbros process terminates. This happens when exiting the title via Home Menu. This also happens automatically when attempting to boot the hb-launcher payload on Old3DS. Therefore, the hb-launcher payload can only be booted successfully on New Nintendo 3DS and New Nintendo 3DS XL(at the time of writing).
 
 Right after the initial arm11code initializes stack, it will overwrite the framebuffers in VRAM with junk, to indicate that the code is running. Originally this was intended for the top-screen, however with v1.1.0 on new3ds this ends up only overwritting the bottom-screen framebuffers.
 
