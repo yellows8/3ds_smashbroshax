@@ -85,6 +85,8 @@ all:
 	@make buildhax --no-print-directory $(PARAMS) BUILDNAME=gameotherv110 APPBUILD=110 $(COMMIDS_FULLGAME) ROP_PATH=gameother/1.1.0
 	@make buildhax --no-print-directory $(PARAMS) BUILDNAME=gameusav111 APPBUILD=111 REGION=1 $(COMMIDS_FULLGAME) ROP_PATH=USA/1.1.1
 	@make buildhax --no-print-directory $(PARAMS) BUILDNAME=gameotherv111 APPBUILD=111 $(COMMIDS_FULLGAME) ROP_PATH=gameother/1.1.1
+	@make buildhax --no-print-directory $(PARAMS) BUILDNAME=gameusav112 APPBUILD=112 REGION=1 $(COMMIDS_FULLGAME) ROP_PATH=USA/1.1.2
+	@make buildhax --no-print-directory $(PARAMS) BUILDNAME=gameotherv112 APPBUILD=112 $(COMMIDS_FULLGAME) ROP_PATH=gameother/1.1.2
 
 clean:
 	@rm -R -f build

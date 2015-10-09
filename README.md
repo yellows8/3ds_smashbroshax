@@ -20,8 +20,9 @@ Supported application builds:
 * v1.0.5. USA: "supported". The target heap address for overwriting the target object varies, hence this hax doesn't actually work right with this version. This version is not fully supported due to this.
 * v1.1.0. USA: supported+tested. "gameother": supported+tested.
 * v1.1.1. USA: supported+tested. "gameother": supported+tested.
+* v1.1.2. USA: supported+tested. "gameother": supported+tested.
 
-Last version tested with this vuln was v1.1.1, vuln still isn't fixed with that version.
+Last version tested with this vuln was v1.1.2, vuln still isn't fixed with that version.
 
 EUR and JPN full-game .code binaries addresses-wise are basically the same, for v1.0.4 at least. Hence, the filenames for these two regions include "gameother".
 
@@ -42,7 +43,7 @@ Make params:
 * "ADDITONALDATA_SIZE1={val}" Use the specified value for the raw size value in the beacon additionaldata, instead of the default one. For example, with a large value this could be used to build vuln-test pcaps.
 * "BEACON_BYTEID={val}" Override the u8 ID used in the networkstruct(default is 0x0 for regular Smash multiplayer). 0x1 is smash-run(which works fine with this hax). 0x55 is WiiU comms: the vulnerable smash-3ds function is never executed with this however.
 
-Only one of the PAYLOAD* params must be specified.
+Only one of the PAYLOAD* params must be specified. The commands used for the release-archive is: make clean && make "PAYLOADPATH=/smashpayload.bin"
 
 # Usage
 Remember to always broadcast the beacon on the same channel as specified in the beacon itself(channel 6 with the default pcap base). The following data *must* *not* be changed in the beacon frame while it's being sent: host/BSSID MAC addresses, and all of the beacon tags. The MAC address with the default base pcap is: 59:ee:3f:2a:37:e0.

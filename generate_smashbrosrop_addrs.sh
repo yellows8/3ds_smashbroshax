@@ -32,3 +32,6 @@ do
 	done
 done
 
+cp -R smashbrosrop/USA/* prebuilt_smashbrosrop/USA/
+cp -R smashbrosrop/EUR/* prebuilt_smashbrosrop/gameother/
+

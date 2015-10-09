@@ -543,7 +543,7 @@ bne load_payload_endload
 add r0, sp, #16
 ldr r1, [sp, #20]
 mov r2, r6
-ldr r3, =0xa000
+ldr r3, =0xc000
 bl HTTPC_ReceiveData
 cmp r0, #0
 bne load_payload_endload
@@ -595,7 +595,7 @@ str r0, [sp, #0] @ u32* total transfersize
 add r0, sp, #24 @ filehandle*
 mov r1, #0 @ u32 filepos
 mov r2, r6 @ buf
-ldr r3, =0xa000 @ size
+ldr r3, =0xc000 @ size
 bl fsfile_read
 mov r5, r0
 
@@ -637,7 +637,7 @@ cmp r4, #0
 beq load_payload_end
 
 ldr r7, =0x1000
-lsl r1, r7, #2
+ldr r1, =0xc000
 
 mov r0, r6
 ldr r2, =GSPGPU_FLUSHDCACHE
@@ -649,7 +649,7 @@ ldr r1, [r1]
 lsl r2, r7, #4
 sub r1, r1, r2 @ Subtract out the .text+0x10000 offset.
 add r1, r1, r7 @ dstaddr
-ldr r2, =0xa000 @ size
+ldr r2, =0xc000 @ size
 bl cpydat_gxlowcmd4
 
 ldr r0, =1000000000
