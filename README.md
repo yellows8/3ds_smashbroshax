@@ -52,7 +52,7 @@ The built beacon-hax pcaps are located under "pcap_out/". In the filenames, "vXY
 
 One way to send the beacon is with aireplay-ng, however that requires a patch, see aireplay-ng.patch. For example, to send the beacon with aireplay-ng(the wifi interface must already be in monitor mode + be on the correct channel): aireplay-ng --interactive -r {beaconpcap_path} -h {host mac from pcap} -x 10 {wifi interface}
 
-This can be used with the homebrew-launcher otherapp payload to boot into hbmenu. However, doing so is New3DS-only, at the time of writing(supporting Old3DS with hb-launcher from this would require major changes).
+This can be used with the homebrew-launcher otherapp payload. However, doing so is New3DS-only, at the time of writing(supporting Old3DS with hb-launcher from this would require major changes).
 
 Right after the initial arm11code initializes stack, it will overwrite the framebuffers in VRAM with junk, to indicate that the code is running. Originally this was intended for the top-screen, however with v1.1.0 on new3ds this ends up only overwritting the bottom-screen framebuffers.
 
