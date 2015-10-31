@@ -13,7 +13,7 @@ The Smash 3DS code handling beacons from Wii U does not involve the vulnerable f
 
 # Versions
 Supported application builds:
-* demo: USA+EUR supported and tested. There's no difference between the regular demo and the "Special Demo" with this hax. This was the only version of Smash-3ds supported by this hax initially, until after the USA version of the game was released.
+* demo: USA+EUR supported and tested. There's no difference between the regular demo and the "Special Demo" with this hax. This was the only version of Smash-3ds supported by this hax initially, until after the USA version of the game was released. Note that the release-archives aren't usable with this since those are built for loading the payload from SD: the demo doesn't have SD access.
 * v1.0.0. USA: supported+tested. "gameother": supported+tested.
 * v1.0.2. USA: supported, not tested.
 * v1.0.4. USA: supported+tested. "gameother": supported, not tested.
@@ -39,7 +39,7 @@ ctr-wlanbeacontool from here is required: https://github.com/yellows8/ctr-wlanbe
 Make params:
 * "INPCAP={path}" This is the smash-beacon to use as a base. When used, the specified beacon is used instead of the default one("smashdemo_beacon_modbase.pcap").
 * "PAYLOADURL={url}" HTTP URL to download the payload from.
-* "PAYLOADPATH={sdpath}" SD path to load the payload from, for example: "PAYLOADPATH=/smashpayload.bin".
+* "PAYLOADPATH={sdpath}" SD path to load the payload from, for example: "PAYLOADPATH=/smashpayload.bin". Note that this isn't usable with the Smash demo since the demo doesn't have SD access.
 * "ADDITONALDATA_SIZE1={val}" Use the specified value for the raw size value in the beacon additionaldata, instead of the default one. For example, with a large value this could be used to build vuln-test pcaps.
 * "BEACON_BYTEID={val}" Override the u8 ID used in the networkstruct(default is 0x0 for regular Smash multiplayer). 0x1 is smash-run(which works fine with this hax). 0x55 is WiiU comms: the vulnerable smash-3ds function is never executed with this however.
 
