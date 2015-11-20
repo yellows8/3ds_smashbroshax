@@ -23,8 +23,9 @@ Supported application builds:
 * v1.1.2. USA: supported+tested. "gameother": supported+tested.
 
 Last version tested with this vuln was v1.1.2, vuln still isn't fixed with that version. This exploit was fixed with the regular-demo update, which was released at the following date-times:
-* JPN: 17 November, 2015 05:09:49 -0500.
-* EUR: 19 November, 2015 09:00:05 -0500.
+* JPN: 17 November, 2015 05:09:49 -0600.
+* EUR: 19 November, 2015 09:00:05 -0600.
+* USA: 20 November, 2015 13:45:07 -0600.
 
 EUR and JPN full-game .code binaries addresses-wise are basically the same, for v1.0.4 at least. Hence, the filenames for these two regions include "gameother".
 
