@@ -15,6 +15,7 @@ The Smash 3DS code handling beacons from Wii U does not involve the vulnerable f
 Supported application builds:
 * demo v1.0: USA+EUR supported and tested. There's no difference between the regular demo and the "Special Demo" with this hax. This was the only version of Smash-3ds supported by this hax initially, until after the USA version of the game was released. Note that the release-archives aren't usable with this since those are built for loading the payload from SD: the demo doesn't have SD access. Hence, you must build this hax yourself with the PAYLOADURL option in order to use this with the demo.
 * v1.0.0. USA: supported+tested. "gameother": supported+tested.
+* v1.0.1. USA: supported+tested.
 * v1.0.2. USA: supported, not tested.
 * v1.0.4. USA: supported+tested. "gameother": supported, not tested.
 * v1.0.5. USA: "supported". The target heap address for overwriting the target object varies, hence this hax doesn't actually work right with this version. This version is not fully supported due to this.
