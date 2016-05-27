@@ -12,6 +12,8 @@ Note that because this is a local-WLAN beacon broadcast, *all* 3DS systems in ra
 The Smash 3DS code handling beacons from Wii U does not involve the vulnerable function used with the normal multiplayer beacon handling.
 
 # Versions
+Currently only the update-title is supported for post-v1.0.0. Gamecard/standalone-eShop versions which include post-v1.0.0 are not supported currently, since those use different codebins from the update-title.
+
 Supported application builds:
 * demo v1.0: USA+EUR supported and tested. There's no difference between the regular demo and the "Special Demo" with this hax. This was the only version of Smash-3ds supported by this hax initially, until after the USA version of the game was released. Note that the release-archives aren't usable with this since those are built for loading the payload from SD: the demo doesn't have SD access. Hence, you must build this hax yourself with the PAYLOADURL option in order to use this with the demo. NOTE: The \*hax payload isn't usable with the demo(issue #2).
 * v1.0.0. USA: supported+tested. "gameother": supported+tested.
