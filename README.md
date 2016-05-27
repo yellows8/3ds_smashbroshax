@@ -76,4 +76,5 @@ With the release builds, the hax loads the payload from SD "/smashpayload.bin". 
 * 4) In wifi monitor mode, begin broadcasting the pcap on channel 6 with MAC address "59:ee:3f:2a:37:e0", with the beacon being sent at least 10 times per second.
 * 5) On the target 3DS system, start Super Smash Bros, then goto "Smash" -> "Group".
 * 6) The hax will then eventually trigger on the 3DS system.
+* Use this guide to compile and install on Linux: https://gbatemp.net/threads/tutorial-using-smashhax-with-linux.397194/
 
